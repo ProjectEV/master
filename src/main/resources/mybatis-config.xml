@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ 	<typeAliases>
+ 		<typeAlias alias="BoardDTO" type="kr.co.dong.board.BoardDTO"/>
+ 		<typeAlias alias="BoardReply" type="kr.co.dong.board.BoardReply"/>
+ 		<typeAlias alias="ProductVO" type="kr.co.dong.project.ProductVO"/>
+ 		<typeAlias alias="InventoryVO" type="kr.co.dong.project.InventoryVO"/>
+ 		<typeAlias alias="UserVO" type="kr.co.dong.project.UserVO"/>
+ 		<typeAlias alias="BoardsVO" type="kr.co.dong.project.BoardsVO"/>
+ 		<typeAlias alias="BuyVO" type="kr.co.dong.project.BuyVO"/>
+ 		<typeAlias alias="BuydetailVO" type="kr.co.dong.project.BuydetailVO"/>
+ 		<typeAlias alias="AddressVO" type="kr.co.dong.project.AddressVO"/>
+ 		<typeAlias alias="CartVO" type="kr.co.dong.project.CartVO"/>
+ 		<typeAlias alias="GradeVO" type="kr.co.dong.project.GradeVO"/>
+ 		<typeAlias alias="FileVO" type="kr.co.dong.project.FileVO"/>
+ 		
+ 		<typeAlias alias="int" type="java.lang.Integer"/>
+ 		<typeAlias alias="String" type="java.lang.String"/>
+ 		<typeAlias alias="float" type="java.lang.Float"/>
+ 		<typeAlias alias="map" type="java.util.Map"/>
+ 		<typeAlias alias="list" type="java.util.List"/>
+ 	</typeAliases>
+ </configuration>

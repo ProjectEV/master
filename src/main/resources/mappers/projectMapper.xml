@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.co.dong.projectMapper">
+  
+   <!-- 홈 제품 목록 -->
+   <select id="homeList" parameterType="java.util.Map" resultType="ProductVO">
+	  	<choose>
+	  		<!-- 최근 등록된 제품 -->
+			<when test='code==1'>
+				select *
+				from product
+				where del = 0
+				order by register_date desc
+                limit 8
+			</when>
+			<!-- 많이 팔린 제품 -->
+			<otherwise>
+				select *
+				from product
+				where del = 0
+				order by product_sales desc	
+				limit 9
+			</otherwise>
+		</choose>
+   </select>  
+  
+  <select id="product_totalRecord" resultType="int">
+		select count(*) from product
+		where del = 0
+  </select>
+  
+  <select id="mypage_totalRecord" parameterType="String" resultType="int">
+		select count(*) from buy
+		where buy_userid = #{user_id}
+  </select>
+  
+  <select id="address_totalRecord" parameterType="String" resultType="int">
+		select count(*) from address
+		where address_userid = #{user_id}
+  </select>
+  
+  <select id="cart_totalRecord" parameterType="String" resultType="int">
+		select count(*) from cart
+		where cart_userid = #{user_id}
+  </select>
+  
+  <select id="totalReview" parameterType="String" resultType="int">
+		select count(*) from boards
+		where boards_category = 1 and boards_productid = #{product_id}
+  </select>
+  
+  
+  
+  <update id="boardsReadCnt" parameterType="int">
+		update boards
+		set
+		boards_readcnt = boards_readcnt + 1
+		where boards_no = #{boards_no}
+  </update>
+  
+  
+	<select id="productDetail" parameterType="String" resultType="ProductVO">
+		select *
+		from product
+		where product_id = #{product_id}
+	</select>
+  
+	<select id="gradeDetail" parameterType="String" resultType="GradeVO">
+		select *
+		from grade
+		where grade_userid = #{user_id}
+	</select>
+  
+  
+  
+  
+  
+  <select id="listProduct" parameterType="map" resultType="ProductVO">
+	  SELECT *
+      FROM product
+      where del = 0
+      order by product_id
+      LIMIT #{start}, #{pageSIZE}
+  </select>
+  
+  <select id="listMypage" parameterType="map" resultType="BuyVO">
+	  SELECT *
+      FROM buy
+      where buy_userid = #{user_id}
+      order by buy_no desc
+      LIMIT #{start}, #{pageSIZE}
+  </select>
+  
+  <select id="listBuy" parameterType="String" resultType="BuyVO">
+	  SELECT *
+      FROM buy
+      where buy_userid = #{user_id} and not buy_amount = 0
+      order by buy_regdate desc
+  </select>
+  
+   <select id="listBuydetail" parameterType="java.lang.Integer" resultType="BuydetailVO">
+	    select * 
+	    from buydetail 
+	    where buydetail_del = 0 and buydetail_buyno in 
+	    <foreach collection="array" item="buyno" open="(" separator="," close=")">
+	        #{buyno}
+	    </foreach>
+	</select>
+  
+   <select id="mypageDetailProduct" parameterType="java.lang.String" resultType="ProductVO">
+	    select * 
+	    from product 
+	    where product_id in 
+	    <foreach collection="array" item="productno" open="(" separator="," close=")">
+	        #{productno}
+	    </foreach>
+	</select>
+  
+  
+  
+  <select id="listProductVoid" resultType="ProductVO">
+	  SELECT *
+      FROM product
+      where del = 0
+      order by product_id
+  </select>
+  
+  <select id="listAddress" parameterType="String" resultType="AddressVO">
+		select *
+		from address
+		where address_userid = #{user_id}
+  </select>
+  
+  <select id="listCart" parameterType="String" resultType="CartVO">
+		select *
+		from cart, product
+		where cart.cart_productid = product.product_id and cart_userid = #{user_id}
+  </select>
+  
+  <select id="listSales" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id 
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid
+		order by buydetail_code desc
+  </select>
+  
+  <select id="listSalesPaging" parameterType="map" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id 
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid
+		order by buydetail_code desc
+		LIMIT #{start}, #{pageSIZE}
+  </select>
+
+  <select id="listCancel" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade, buycancel
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid 
+			and buydetail.buydetail_no = buycancel.buycancel_buydetailno
+		order by buydetail_code desc
+  </select>
+  
+  <select id="listCancelPaging" parameterType="map" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade, buycancel
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id 
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid
+			and buydetail.buydetail_no = buycancel.buycancel_buydetailno
+		order by buydetail_code desc
+		LIMIT #{start}, #{pageSIZE}
+  </select>  
+  
+   <select id="listCancel2" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade, buycancel
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid 
+			and buydetail.buydetail_no = buycancel.buycancel_buydetailno
+			and buy_userid = #{user_id}
+		order by buydetail_code desc
+  </select>
+  
+  <select id="listCancelPaging2" parameterType="map" resultType="BuydetailVO">
+		select *
+		from buy, buydetail, (select * from product where del = 0) p, user, grade, buycancel
+		where buy.buy_no = buydetail.buydetail_buyno and buydetail.buydetail_productid = p.product_id 
+			and buy.buy_userid = user.user_id and buy.buy_userid = grade.grade_userid
+			and buydetail.buydetail_no = buycancel.buycancel_buydetailno
+			and buy_userid = #{user_id}
+		order by buydetail_code desc
+		LIMIT #{start}, #{pageSIZE}
+  </select>    
+  
+  
+  
+  
+   
+  
+  
+  <select id="reviewlist" parameterType="String" resultType="BoardsVO">
+		select *
+		from boards
+		where boards_productid = #{product_id} and boards_category = 1
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  <select id="projectLogin" parameterType="map" resultType="map">
+  		select *
+  		from user
+  		where user_id=#{user_id} and user_password=#{user_password}  		
+  </select>	
+  
+  
+  
+  
+  
+  
+  <insert id="join" parameterType="UserVO">
+		insert into 
+		user (user_id, user_name, user_password, user_email, user_birth, user_admin, user_phone, user_joindate)
+		values (#{user_id}, #{user_name}, #{user_password}, #{user_email}, #{user_birth}, 0, #{user_phone}, curdate())
+  </insert>
+  
+  <insert id="pay" parameterType="BuyVO">
+		insert into 
+		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive)
+		values (#{buy_userid}, curdate(), #{buy_amount}, #{buy_address}, #{buy_receive})
+  </insert>
+  
+  <insert id="review" parameterType="BoardsVO">
+		insert into boards(boards_title, boards_content, boards_userid, boards_regdate,
+        boards_readcnt, boards_category, del, boards_productid, boards_review_score)
+        values(#{boards_title}, #{boards_content}, #{boards_userid}, curdate(), 0,1,0, #{boards_productid}, #{boards_review_score})
+  </insert>
+  
+  <insert id="faq" parameterType="BoardsVO">
+		insert into 
+		boards (boards_title, boards_content, boards_userid, boards_regdate, boards_readcnt, boards_category, del)
+		values (#{boards_title}, #{boards_content}, #{boards_userid}, now(), 0, 2, 0)
+  </insert>
+  
+  <insert id="notice" parameterType="BoardsVO">
+		insert into 
+		boards (boards_title, boards_content, boards_userid, boards_regdate, boards_readcnt, boards_category, del)
+		values (#{boards_title}, #{boards_content}, #{boards_userid}, now(), 0, 3, 0)
+  </insert>
+  
+  <insert id="grade" parameterType="UserVO">
+		insert into 
+		grade (grade_userid, grade_totalPurchase, grade, grade_discount)
+		values (#{user_id}, 0, 0, 1)
+  </insert>
+  
+  <insert id="grade2" parameterType="String">
+		insert into 
+		grade (grade_userid, grade_totalPurchase, grade, grade_discount)
+		values (#{user_id}, 0, 0, 1)
+  </insert>
+  
+  <select id="findGradeUser" parameterType="String" resultType="int">
+		select count(*) from grade
+		where grade_userid = #{user_id}
+  </select>
+  
+  <select id="findGradeTotalPrice" parameterType="String" resultType="int">
+		select sum(buy_totalPrice)
+		from buy
+		where buy_userid = #{user_id} and
+			datediff(curdate(),buy_regdate) &lt; 90
+  </select>
+  
+  <update id="updateGrade" parameterType="map">
+		update grade
+		set
+		grade_totalPurchase = #{totalPrice}, grade = #{grade}, grade_discount = #{discount}, grade_name = #{gradename}
+		where grade_userid = #{user_id}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  <insert id="productRegister" parameterType="ProductVO">
+		insert into 
+		product (product_id, product_name, product_price, product_content, product_category, product_remain, product_sales, register_date)
+		values (#{product_id}, #{product_name}, #{product_price}, #{product_content}, #{product_category}, #{product_remain}, 0, now())
+  </insert>
+  
+  <delete id="productDelete" parameterType="String">
+  		update product
+  		set del = 1
+  		where product_id = #{product_id} 
+  </delete>
+  
+  <update id="productRemainPlus" parameterType="map">
+  		update product
+  		set product_remain = product_remain + #{product_plus}
+  		where product_id = #{product_id}
+  </update>
+  
+  
+  
+	<!-- 글 수정하는 SQL "update"-->
+	<update id="productUpdate" parameterType="ProductVO">
+		update product
+		set
+		product_name=#{product_name} , product_price=#{product_price} , product_category=#{product_category},
+		product_content=#{product_content}, product_remain = #{product_remain}
+		where product_id = #{product_id}
+	</update>
+  
+   <update id="productAdd" parameterType="map">
+  		update product
+  		set product_remain = product_remain + #{product_add}
+  		where product_id = #{product_id}
+   </update>
+  
+  
+  
+  
+  <insert id="cartRegister" parameterType="map">
+		insert into 
+		cart (cart_userid, cart_productid, cart_productname, cart_amount)
+		values (#{user_id}, #{product_id}, #{product_name}, #{amount})
+  </insert>
+  
+  <update id="cartUpdate" parameterType="map">
+		update cart
+		set
+		cart_amount=#{cart_amount}
+		where cart_productid = #{product_id} and cart_userid=#{user_id}
+  </update>
+  
+  
+  <update id="cartUpdate123" parameterType="map">
+        <foreach collection="list" item="item" separator=";">
+        UPDATE 
+            cart
+        SET
+            cart_amount = #{item.cart_amount}
+        WHERE
+            cart_userid = #{user_id} and cart_productid = #{item.cart_productid}
+        </foreach>
+  </update>
+  
+  
+  <select id="findCart" parameterType="map" resultType="int">
+  		select count(*) from cart
+		where cart_productid = #{product_id} and cart_userid = #{user_id}
+  </select>
+  
+  <select id="findProductPrice" parameterType="String" resultType="int">
+  		select product_price from product
+		where product_id = #{product_id}
+  </select>
+  
+  
+  
+  <!-- 
+   <select id="remainCheck" parameterType="list" resultType="int">
+  	select count(*) from {
+  		select (product.product_remain - cart.cart_amount)sub from { 
+	  		<foreach collection="list" item="cart" separator=",">
+	  			
+	  		</foreach>
+  		}
+  	}
+  </select>
+   -->
+ 
+  
+  <insert id="buyRegister" parameterType="buyVO">
+		insert into 
+		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive, buy_totalPrice)
+		values (#{user_id}, now(), #{totalRecord}, #{buy_address}, #{buy_receive}, #{totalPrice})
+ </insert>
+  
+ <insert id="buyDetailRegister" parameterType="list">
+	INSERT INTO 
+	buydetail (buydetail_buyno, buydetail_productid, buydetail_amount, buydetail_discounted)
+	VALUES
+        <foreach collection="list" item="item" separator=",">
+        (#{u}, #{item.cart_productid}, #{item.cart_amount}, #{discount})
+        </foreach>
+ </insert>
+  
+ <delete id="cartDelete" parameterType="String">
+  		delete from 
+  		cart
+  		where cart_userid = #{user_id} 
+ </delete>
+ 
+ <delete id="cartDeleteOne" parameterType="map">
+  		delete from 
+  		cart
+  		where cart_userid = #{user_id} and cart_productid = #{product_id}
+ </delete>
+  
+ <select id="findBuyno" resultType="int">
+  		select max(buy_no) from buy
+ </select>
+ 
+ <update id="salesUpdate" parameterType="list">
+        <foreach collection="list" item="item" separator=";">
+        update product
+        set product_sales = product_sales + #{item.cart_amount}, product_remain = product_remain - #{item.cart_amount}
+        where product_id = #{item.cart_productid}
+        </foreach>
+  </update>
+ 
+ 
+  
+  <select id="findMainAddress" parameterType="String" resultType="AddressVO">
+  		select *
+  		from address
+  		where address_userid = #{user_id} and address_main = 1
+  </select>
+  
+  <select id="findProductNo" parameterType="String" resultType="int">
+		select number from 
+		(select product_id, row_number() over (order by product_id) as number from product where del = 0)a 
+		where product_id = #{product_id};
+  </select>
+  
+  <select id="findSameCategory" parameterType="map" resultType="ProductVO">
+	  SELECT *
+      FROM product
+      where product_category = #{category} and del = 0 and not product_id = #{product_id}
+      order by product_id
+  </select>
+  
+  
+  
+	<select id="buyDetail" parameterType="int" resultType="buyVO">
+		select *
+		from buy
+		where buy_no = #{buy_no}
+	</select>
+	
+	<select id="buydetailDetail" parameterType="int" resultType="buydetailVO">
+		select *
+		from buydetail
+		where buydetail_no = #{buydetail_no}
+	</select>
+	
+	<update id="cancelUpdateBuy" parameterType="map">
+		update buy
+		set
+		buy_amount = buy_amount - 1, buy_totalPrice = buy_totalPrice - #{buydetailPrice}
+		where buy_no = #{buy_no}
+	</update>
+	
+	<update id="cancelUpdateProduct" parameterType="map">
+		update product
+		set
+		product_remain = product_remain + #{amount}, product_sales = product_sales - #{amount}
+		where product_id = #{product_id}
+	</update>
+	
+	<update id="deleteBuydetail" parameterType="int">
+  		update buydetail
+  		set buydetail_del = 1
+  		where buydetail_no = #{buydetail_no} 
+	</update>
+	
+	<delete id="deleteBuy" parameterType="int">
+  		delete from 
+  		buy
+  		where buy_no = #{buy_no} 
+	</delete>
+
+  <insert id="cancelDate" parameterType="int">
+		insert into 
+		buycancel (buycancel_buydetailno, buycancel_regdate)
+		values (#{buydetail_no}, now())
+  </insert>
+
+
+
+
+
+
+	<!-- 파일 업로드 -->
+	<insert id="fileUpload" parameterType="FileVO">
+		insert into 
+		file (file_name, file_path, file_connection_id)
+		values (#{file_name}, #{file_path}, #{file_connection_id})
+	</insert>
+  
+	<!-- 파일 조회 -->
+	<select id="fileSelect" parameterType="String" resultType="String">
+		select file_name
+		from file
+		where file_connection_id=#{product_id}
+	</select>
+  
+	<!-- 제품 목록에서 대표 이미지 조회 -->
+	<select id="listFileSelect" parameterType="String" resultType="FileVO">
+		WITH ranked_files AS (
+			SELECT 
+				file_name, 
+				file_connection_id, 
+				ROW_NUMBER() OVER (PARTITION BY file_connection_id ORDER BY file_name) AS rnk
+		    FROM file
+		    WHERE file_connection_id IN 	    
+		    <foreach collection="array" item="productno" open="(" separator="," close=")">
+	        	#{productno}
+	    	</foreach>
+		)
+		SELECT *
+		FROM ranked_files
+		WHERE rnk = 1;
+	</select>
+
+	<!-- 보드 테이블 마지막 튜플의 번호 조회 -->
+	<select id="boardsNoLast" resultType="int">
+		select boards_no
+		from boards
+		order by boards_no desc
+		limit 1;
+	</select>
+
+  	<!-- 아이디 중복체크 처리 -->
+  	<select id="id_check" parameterType="java.lang.String" resultType="java.lang.Integer">
+  		select count(*) from user
+  		where user_id = #{user_id};
+  	</select>
+  	
+  	<!-- 아이디 찾기 처리 -->
+  	<select id="id_search" parameterType="java.util.Map" resultType="java.lang.String">
+  		select user_id 
+  		from user
+  		where user_email = #{user_email} and user_name = #{user_name};
+  	</select>
+  	
+  	<!-- 비밀번호 찾기 처리 -->
+  	<select id="pwd_search" parameterType="java.lang.String" resultType="java.lang.String">
+  		select user_id
+  		from user
+  		where user_id = #{user_id};
+  	</select>
+  	
+  	<!-- 비밀번호 변경 처리 -->
+  	<update id="pwd_change" parameterType="java.util.Map">
+  		update user
+  		set user_password = #{user_password}
+  		where user_id = #{user_id}
+  	</update>
+
+	<!-- 주소지 조회(get) -->
+   <select id="addressManageSelect1" parameterType="java.lang.String" resultType="AddressVO">
+	  select *
+	  from address
+	  where address_userid = #{userid}
+   </select>
+   
+   	<!-- 주소지 수정(get) -->
+   <select id="addressManageUpdate1" parameterType="java.lang.Integer" resultType="AddressVO">
+	  select *
+	  from address
+	  where address_no = #{address_no}
+   </select>
+   
+   <!-- 주소지 수정(post) -->
+   <update id="addressManageUpdate2" parameterType="AddressVO">
+	  update address
+	  set address_name=#{address_name}, address_content=#{address_content}, address_main=#{address_main}
+	  where address_no=#{address_no}
+   </update>
+   
+   <!-- 주소지 추가(post) -->
+   <insert id="addressManageAdd2" parameterType="AddressVO">
+   		insert into address(address_userid, address_main, address_name, address_content)
+		values (#{address_userid}, #{address_main}, #{address_name}, #{address_content});
+   </insert>
+   
+   <!-- 메인 주소 초기화 -->
+   <update id="addressManageMainReset">
+		update address
+		set address_main=0
+		where address_main=1;
+   </update>
+   
+   <!-- 주소지 삭제(get) -->
+   <delete id="addressManageDelete1" parameterType="java.lang.Integer">
+   	  delete from address
+	  where address_no = #{address_no}
+   </delete>
+   
+   <!-- 카테고리 조회 -->
+   <select id="selectCategory" parameterType="java.lang.String" resultType="java.lang.String">
+	  select code_name
+	  from code
+	  where code_id = "product_category" and code_category=#{category}
+   </select>
+
+   <!-- 키워드 검색 -->
+   <select id="productSearch" parameterType="java.lang.String" resultType="ProductVO">
+	  select *
+	  from product
+	  where product_name like concat('%',#{keyword},'%') and del = 0
+	  order by product_id
+   </select>
+
+   <!-- 키워드 검색 -->
+   <select id="productSearchKeyword" parameterType="map" resultType="ProductVO">
+	  select *
+	  from product
+	  where product_name like concat('%',#{keyword},'%') and del = 0
+	  order by product_id
+	  LIMIT #{start}, #{plPageSIZE}
+   </select>
+
+   <!-- 카테고리 검색 -->
+   <select id="categorySearch" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0 and
+	  	<choose>
+			<when test='category &lt; 10'>
+				product_category like concat(#{category},'%')
+			</when>
+			<otherwise>
+				product_category = #{category}	
+			</otherwise>
+		</choose>
+   </select>
+
+   <!-- 카테고리 검색 -->
+   <select id="categorySearchCategory" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0 and
+	  	<choose>
+			<when test='category &lt; 10'>
+				product_category like concat(#{category},'%')
+			</when>
+			<otherwise>
+				product_category = #{category}	
+			</otherwise>
+		</choose>
+	LIMIT #{start}, #{lcPageSIZE}
+   </select>
+
+   <!-- 정렬 검색 -->
+   <select id="orderSearch" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0
+	  	<choose>
+			<when test='code==1'>
+				order by product_price asc		
+			</when>
+			<when test='code==2'>
+				order by product_price desc		
+			</when>
+			<otherwise>
+				order by product_sales desc		
+			</otherwise>
+		</choose>
+   </select>
+
+   <!-- 정렬 검색 -->
+   <select id="orderSearchCode" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0
+	  	<choose>
+			<when test='code==1'>
+				order by product_price asc	
+			</when>
+			<when test='code==2'>
+				order by product_price desc
+			</when>
+			<otherwise>
+				order by product_sales desc
+			</otherwise>
+		</choose>
+	  LIMIT #{start}, #{ocPageSIZE}
+    </select>
+
+	  <select id="findAvgScore" parameterType="String" resultType="float">
+			select AVG(boards_review_score) from boards
+			where boards_productid = #{product_id}
+	  </select>
+	
+	  <update id="updateAvgScore" parameterType="map">
+			update product
+			set
+			avgScore = #{productAvgScore}
+			where product_id = #{product_id}
+	  </update>
+
+	<select id="listUserCartProduct" parameterType="String" resultType="ProductVO">
+		SELECT p.*
+		FROM product p
+		INNER JOIN (select * from cart where cart_userid = #{user_id}) c
+		ON p.product_id = c.cart_productid;
+	</select>
+
+	<update id="updateBuydetailCode" parameterType="map">
+		update buydetail
+		set
+		buydetail_code = #{code}
+		where buydetail_no = #{buydetail_no}
+	</update>
+	
+	
+	
+	  <!-- 제품 상세페이지에서 문의 조회 -->
+	  <select id="inquirylist" parameterType="String" resultType="BoardsVO">
+			select *
+			from boards
+			where boards_productid = #{product_id} and boards_category = 2  
+	  </select>
+	  
+	  <!-- 관리자 페이지에서 문의 조회 -->
+	  <select id="adminInquirylist" resultType="BoardsVO">
+			select *
+			from boards
+			where boards_category = 2  
+	  </select>
+	  
+	  <!-- 제품 상페페이지에서 관리자 답변 조회 -->
+	  <select id="detailAdminInquiryList" resultType="BoardsVO" parameterType="String">
+	  		select *
+	  		from boards
+			where boards_category = 3
+	  </select>
+	  
+	  <!-- 사용자가 문의 작성 -->
+	  <insert id="inquiry" parameterType="BoardsVO">
+	  		insert into boards(boards_title, boards_content, boards_userid, boards_regdate,
+	  		boards_readcnt, boards_category, del, boards_productid)
+	  		values(#{boards_title}, #{boards_content}, #{boards_userid}, curdate(), 0,2,0, #{boards_productid})
+	  </insert>
+	  
+	  <!-- 관리자가 답변 작성 -->
+	  <insert id="adminInquiryForm" parameterType="BoardsVO">
+	  		insert into boards(boards_title,boards_content, boards_userid, boards_regdate, boards_category,
+	  		 del, boards_inquiry_conn)
+	  		 values("관리자 답변", #{boards_content},#{boards_userid}, curdate(),3,0,#{boards_inquiry_conn})
+	  </insert>
+	  
+	<!-- 찜 목록 -->
+   	<select id="wishlist" parameterType="java.lang.String" resultType="ProductVO">
+	    select * 
+	    from product 
+	    where product_id in 
+	    <foreach collection="list" item="item" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</select>
+
+
+
+
+
+</mapper>
