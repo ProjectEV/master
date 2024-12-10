@@ -3,47 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<meta name="description" content="Ashion Template">
-    <meta name="keywords" content="Ashion, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-   crossorigin="anonymous"></script>
-<link rel="stylesheet"
-   href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script
-   src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<title>아이디 찾기</title>
+<%@ include file="head.jsp" %>
 
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services"></script>
-<script type="text/javascript" src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-    
-    
- 
-     
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
-       
-          
-     <style>
+    <style>
         /* 페이지 전체를 Flexbox로 설정 */
-         body {
+    body {
         margin: 0;
         height: 100vh; /* 화면 전체 높이 */
         display: flex;
@@ -51,6 +16,10 @@
         justify-content: center; /* 수직 중앙 정렬 */
         align-items: center; /* 가로 중앙 정렬 */
         background-color: #f8f9fa; /* 선택적 배경색 */
+    }
+    
+    .contact__form {
+        text-align: center; /* 텍스트 가운데 정렬 */
     }
 
     input {
@@ -70,16 +39,6 @@
         width: 100%; /* 컨테이너가 입력 칸만큼 넓어지도록 설정 */
         margin-top: 10px; /* 위와 약간의 간격 */
     }
-
-   
-
-    .site-btn:hover {
-       background-color: #b30000;
-      
-    
-    }
-
-    
     
     .confirm-btn {
         background-color: #0073e6; /* 진한 빨강 배경 */
@@ -108,59 +67,32 @@
     
     h5 {
     	text-align: center;
-    
     }
-   
-   
-   
-     
-    </style>
-          
-          
-       
-    </head>
 
- 
+	</style>
+</head>
+
 <body>
+	<div class="contact__form" style="width: 300px;">
+		<h5>아이디 찾기</h5>
+		<form method="post" action="/project/id_search" name="id_searchform">
+		<input type="text" name="user_email" placeholder="이메일" required><br>
+		<input type="text" name="user_name" placeholder="이름" required>
+			<div class="buttons">
+			<button type="submit" class="site-btn" >검사</button>
+			</div>
+		<br><br>
+		${msg}
+		</form>                          
+	</div>    
+           
+    <script>
+      function idok_2() {
+    	 self.close();
 
-
-	 			<div class="contact__form" style="width: 300px;">
-                              <h5>아이디 찾기</h5>
-                         
-                              <form method="post" action="/project/id_search" name="id_searchform">
-                          		 <input type="text" name="user_email" placeholder="이메일" required><br>
-                           		<input type="text" name="user_name" placeholder="이름" required>
-                           
-         						<div class="buttons">
-                          			 <button type="submit" class="site-btn" >검사</button>
-                           		</div>
-      					  		<br><br>
-                        		 ${msg}
-      							
-                     		</form>                          
-                   </div>    
-                        
- 
-                        
-                        <script>
-                      function idok_2() {
-                     self.close();
-         
-                      }
-                  </script>
-       
-
-<!-- Js Plugins -->
-        <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-        
+      }
+    </script>
+    
+    <%@ include file="foot.jsp" %>   
 </body>
 </html>

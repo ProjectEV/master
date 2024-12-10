@@ -10,6 +10,10 @@ public interface ProjectService {
 	//홈 제품 목록
 	public List<ProductVO> homeList(Map<String, Object> codeMap);
 	
+    public int findReview(int buydetail_no);
+    public int updateBuydetailReview(int buydetail_no);
+
+	
 	
 	public int product_totalRecord();
 	public int mypage_totalRecord(String user_id);
@@ -39,15 +43,14 @@ public interface ProjectService {
 	public List<BuydetailVO> listCancel(String user_id, int start, int c2PageSIZE);	
 	
 	
+	public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE);
 	
 	
-	public List<BuyVO> listBuy(String userid);
 	public List<BuydetailVO> listBuydetail(int[] buyno);
 	
+	
 	public List<ProductVO> mypageDetailProduct(String[] productno);
-	
-	
-	
+
 	
 	public Map<String, Object> projectLogin(Map<String, Object> map);
 	

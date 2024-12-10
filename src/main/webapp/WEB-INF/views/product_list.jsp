@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
-<title>TechNova</title>
+<title>제품목록</title>
 <head>
 <style>
 
@@ -259,7 +260,7 @@
                                     		</c:otherwise>
                                     	</c:choose>
 			                                    </div>
-			                                    <div class="product__price">${product.product_price} 원</div>
+			                                    <div class="product__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
 			                                </div>
                                      	</c:if>
 		                            </c:forEach>

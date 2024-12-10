@@ -25,6 +25,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectList(nameSpace + ".homeList", codeMap);
 	}	
 	
+	@Override
+	   public int findReview(int buydetail_no) {
+	      // TODO Auto-generated method stub
+	      return sqlSession.selectOne(nameSpace + ".findReview", buydetail_no);
+	   }
+	   @Override
+	   public int updateBuydetailReview(int buydetail_no) {
+	      // TODO Auto-generated method stub
+	      return sqlSession.update(nameSpace + ".updateBuydetailReview", buydetail_no);
+	   }
+
 	
 	
 	
@@ -164,10 +175,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 	
 	
 	@Override
-	public List<BuyVO> listBuy(String userid) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(nameSpace + ".listBuy", userid);
-	}
+	   public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE) {
+	      // TODO Auto-generated method stub
+	      HashMap<String, Object> map = new HashMap<String, Object>();
+	      map.put("userid", userid);
+	      map.put("start", start);
+	      map.put("pageSIZE", mypagePageSIZE);
+	      return sqlSession.selectList(nameSpace + ".listBuy", map);
+	   }
+
 	@Override
 	public List<BuydetailVO> listBuydetail(int[] buyno) {
 		// TODO Auto-generated method stub

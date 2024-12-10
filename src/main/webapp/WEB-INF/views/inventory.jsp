@@ -2,11 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="zxx">
-
+<meta charset="UTF-8">
+<title>재고관리</title>
 <head>
   
 <style>
@@ -140,17 +139,12 @@
 }
 
 
-
-
 </style>
-
-    
 
 </head>
 
 <body>
     
-
     <%@ include file="header.jsp" %>
 
     <!-- Breadcrumb Begin -->
@@ -162,7 +156,7 @@
                         <a href="/"><i class="fa fa-home"></i> 홈</a>
                         <a href="/">관리자 페이지</a>
                         <span> 재고관리 </span>
-                        <span style="width: 30px"></span>
+                        <span style="width: 230px"></span>
                         <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
                         <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
                         <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
@@ -206,7 +200,7 @@
                                     
                                     	<a href="product_detail?product_id=${product.product_id}"> <img src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="" height="70px" width="70px"> </a>
                                         <div class="cart__product__item__title">
-                                            <h6><a href="inventory_detail?product_id=${product.product_id}" class="product_name_ellipsis">${product.product_name}</a></h6>
+                                            <a href="inventory_detail?product_id=${product.product_id}" class="product_name_ellipsis" style="text-decoration: none;"><h6>${product.product_name}</h6></a>
                                             <div>${product.product_id}</div>
                                             
                                         </div>
@@ -363,48 +357,24 @@
 						<c:otherwise>
 							<a style="color:lightgray;"> &gt; </a> 
 						</c:otherwise>
-            		</c:choose>		  
-					
-					
+            		</c:choose>
                 </div>
+                <br><br><br>
                 
-                
-                <br><br>
+                <!-- 
             <div class="row">
-                
-                
-                
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-sm-3">
                     <div class="cart__btn">
                         <a href="/project/product_register"> Upload New Product </a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Update cart</a>
+                <div class="col-sm-3">
+                    <div class="cart__btn">
                     </div>
                 </div>
-            </div>
-            
-            <br>
-            
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="discount__content">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">Apply</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-2">
+                <div class="col-sm-6">
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
-                        
-                       
-                        
-                        
                         <ul>
                             <li>Subtotal <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
                             <li>Total <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
@@ -412,13 +382,11 @@
                         <a href="/project/pay" class="primary-btn">Proceed to checkout</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </div>  -->
+    </section> 
     <!-- Shop Cart Section End -->
 
     <%@ include file="instagram.jsp" %>
-
     <%@ include file="footer.jsp" %>
 
     <!-- Search Begin -->

@@ -165,13 +165,13 @@ ol {
 	font-weight: 600;
 	padding: 12px 30px 10px;
 	color: #ffffff;
-	background: #ca1515;
+	background: rgb(0, 0, 0);
 }
 
 .site-btn {
 	font-size: 14px;
 	color: #ffffff;
-	background: #ca1515;
+	background: rgb(0, 0, 0);
 	font-weight: 600;
 	border: none;
 	text-transform: uppercase;
@@ -179,6 +179,12 @@ ol {
 	padding: 12px 30px;
 	border-radius: 50px;
 }
+
+
+.site-btn:hover {
+   background-color: #666666;
+}
+
 
 /* Preloder */
 
@@ -2099,7 +2105,7 @@ ol {
 }
 
 .shop__cart__table tbody tr td {
-	padding: 30px 0;
+	padding: 15px 0;
 }
 
 .shop__cart__table tbody tr .cart__product__item {
@@ -2114,7 +2120,7 @@ ol {
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
 	overflow: hidden;
-	padding-top: 23px;
+	padding-top: 15px;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title h6 {

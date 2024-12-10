@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html>
 <head>
-    
-    
+<title>회원가입</title>
+<%@ include file="head.jsp" %>
+
     <style>
     /* 공통 스타일: input과 select의 동일화 */
     .checkout__form__input input,
@@ -29,16 +28,11 @@
     }
     
 </style>
-    
-    
-    
+
 </head>
 
 <body>
-    
-
     <%@ include file="header.jsp" %>
-
 
     <!-- Checkout Section Begin -->
     
@@ -48,8 +42,8 @@
             <form method="post" action="/project/join" class="checkout__form" name="join_form" onsubmit="return join();">
                 <div class="row">
                     <div class="col-lg-8">
-                  		<div style="text-align: center;">
-                        	<h5>회원가입</h5>
+						<div style="text-align: center; margin: 0 0 50px 0;">
+                        	<h4 style="font-weight: bold;">회원가입</h4>
                       	</div>
                         <div class="row">
                             <div class="col-lg-8 col-md-8 col-sm-8">
@@ -120,34 +114,28 @@
 						    </div>
 						    
 						          
-						    <div class="col-lg-12">
-							    <!-- 제목은 flex 외부에서 고정 -->
-							    <div class="checkout__form__input" style="position: relative;">
-							        <p style="margin-bottom: 5px;">이메일 <span>*</span></p> <!-- 상단 고정 -->
-							        <div style="display: flex; align-items: center;">
-							            <input type="text" id="email1" name="email1" required style="flex: 1; margin-right: 5px;">
-							            <span style="display: inline-block; padding: 0 5px; vertical-align: middle;">@</span>
-							            <select name="email2" id="email2" size="1" style="flex: 1; margin-bottom: 25px;">
-							                <option value="naver.com" selected>naver.com</option>
-							                <option value="gmail.com">gmail.com</option>
-							                <option value="nate.com">nate.com</option>
-							                <option value="daum.net">daum.net</option>
-							                <option value="yahoo.com">yahoo.com</option>
-							            </select>
-							        </div>
-							        <input type="hidden" id="user_email" name="user_email">
-							    </div>
-							</div>
-
-
-
-
-
-
+							    <div class="col-lg-12">
+								    <!-- 제목은 flex 외부에서 고정 -->
+								    <div class="checkout__form__input" style="position: relative;">
+								        <p style="margin-bottom: 5px;">이메일 <span>*</span></p> <!-- 상단 고정 -->
+								        <div style="display: flex; align-items: center;">
+								            <input type="text" id="email1" name="email1" required style="flex: 1; margin-right: 5px;">
+								            <span style="display: inline-block; padding: 0 5px; vertical-align: middle;">@</span>
+								            <select name="email2" id="email2" size="1" style="flex: 1; margin-bottom: 25px;">
+								                <option value="naver.com" selected>naver.com</option>
+								                <option value="gmail.com">gmail.com</option>
+								                <option value="nate.com">nate.com</option>
+								                <option value="daum.net">daum.net</option>
+								                <option value="yahoo.com">yahoo.com</option>
+								            </select>
+								        </div>
+								        <input type="hidden" id="user_email" name="user_email">
+								    </div>
+								</div>
                            </div>
                         </div>
                     </div>
-                    <div style="margin-left: 250px; ">
+                    <div style="margin: 50px 0 50px 250px;">
                     <button type="submit" class="site-btn">회원가입</button>&nbsp;&nbsp;
                     <button type="reset" class="site-btn">다시작성</button>
                     </div>
@@ -158,9 +146,7 @@
         <!-- Checkout Section End -->
 
         <%@ include file="instagram.jsp" %>
-
     	<%@ include file="footer.jsp" %>
-
 
         <!-- Search Begin -->
         <div class="search-model">
@@ -237,7 +223,6 @@
 			var url = "/project/id_check?user_id=" + document.join_form.user_id.value;
 			window.open(url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=200");
 		}
-		
 	}
 
 	//제이쿼리
@@ -254,11 +239,7 @@
 	});
 	
 </script>
-        
-        
-        
-        
-        
+
 </body>
 
 </html>

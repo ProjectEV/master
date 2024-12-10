@@ -2,16 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
-<title>Ashion | Template</title>
+<title>장바구니</title>
 <head>
-    
-  
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -34,7 +29,6 @@
                     $(this).val(remain);
                     return;
                 }
-                
                 
                 // 개별 상품의 총 가격 업데이트
                 const totalPrice = quantity * price;
@@ -64,9 +58,9 @@
     
 <style>
 .product_name_ellipsis {
-                        overflow : hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
+     overflow : hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
 }
 </style>              
     
@@ -112,11 +106,8 @@
                             </thead>
                             <tbody>
                             
-                            
                             <c:set var = "total" value = "0" />
-                            
-                            
-                            
+
                             <c:forEach var="cart" items="${list }" varStatus="status">
                             <c:forEach var="imageList" items="${imageList}">
                                      	<c:if test="${imageList.file_connection_id == cart.cart_productid}">
@@ -125,7 +116,7 @@
                                     <td class="cart__product__item">
                                         <img src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="" height="70px" width="70px">
                                         <div class="cart__product__item__title">
-                                            <h6><a href="product_detail?product_id=${cart.cart_productid}" class="product_name_ellipsis">${cart.cart_productname}</a></h6>
+                                            <a href="product_detail?product_id=${cart.cart_productid}" class="product_name_ellipsis" style="text-decoration: none;"><h6>${cart.cart_productname}</h6></a>
                                     	<div class="rating">
                                     	<c:choose>
                                     		<c:when test="${cart.avgScore < 0.25}">
@@ -226,10 +217,6 @@
                                         		<input type="number" class="quantity-input pro-qty" name="update[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
                                         	</c:otherwise>
                                         </c:choose>
-                                        
-                                        
-                                        
-                                        
                                     </td>
                                     <td class="product-total">&#8361; 
                                     	<c:choose>
@@ -281,11 +268,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="discount__content">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">Apply</button>
-                        </form>
+                       
                     </div>
                 </div>
                 <div class="col-lg-4 offset-lg-2">
@@ -309,7 +292,6 @@
     <!-- Shop Cart Section End -->
 
     <%@ include file="instagram.jsp" %>
-
     <%@ include file="footer.jsp" %>
 
     <!-- Search Begin -->

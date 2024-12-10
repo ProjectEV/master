@@ -25,6 +25,18 @@
 			</otherwise>
 		</choose>
    </select>  
+   
+   <select id="findReview" parameterType="int" resultType="int">
+      select buydetail_review 
+      from buydetail
+      where buydetail_no = #{buydetail_no}
+   </select>
+
+   <update id="updateBuydetailReview" parameterType="int">
+        update buydetail
+        set buydetail_review = 1
+        where buydetail_no = #{buydetail_no}
+   </update>
   
   <select id="product_totalRecord" resultType="int">
 		select count(*) from product
@@ -32,8 +44,8 @@
   </select>
   
   <select id="mypage_totalRecord" parameterType="String" resultType="int">
-		select count(*) from buy
-		where buy_userid = #{user_id}
+      select count(*) from buy
+      where buy_userid = #{user_id} and not buy_amount = 0
   </select>
   
   <select id="address_totalRecord" parameterType="String" resultType="int">
@@ -93,11 +105,12 @@
       LIMIT #{start}, #{pageSIZE}
   </select>
   
-  <select id="listBuy" parameterType="String" resultType="BuyVO">
-	  SELECT *
+  <select id="listBuy" parameterType="map" resultType="BuyVO">
+     SELECT *
       FROM buy
-      where buy_userid = #{user_id} and not buy_amount = 0
+      where buy_userid = #{userid} and not buy_amount = 0
       order by buy_regdate desc
+      LIMIT #{start}, #{pageSIZE}
   </select>
   
    <select id="listBuydetail" parameterType="java.lang.Integer" resultType="BuydetailVO">
@@ -298,11 +311,11 @@
 		values (#{product_id}, #{product_name}, #{product_price}, #{product_content}, #{product_category}, #{product_remain}, 0, now())
   </insert>
   
-  <delete id="productDelete" parameterType="String">
+  <update id="productDelete" parameterType="String">
   		update product
   		set del = 1
   		where product_id = #{product_id} 
-  </delete>
+  </update>
   
   <update id="productRemainPlus" parameterType="map">
   		update product

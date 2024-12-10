@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>제품 구매 목록</title>
+    <title>취소목록</title>
     <style>
         table {
             width: 80%;
@@ -99,11 +99,34 @@
 </head>
 <body>
 
-<%@ include file="header.jsp" %>
-	<br>
-    <h3>${user_name}님의 구매 취소 목록</h3>
+	<%@ include file="header.jsp" %>
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links" style="">
+                        <a href="/"><i class="fa fa-home"></i>Home</a>
+                        <a href="/">마이페이지</a>
+                        <span style="">취소목록</span>
+                        <span style="width: 500px"></span>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/mypage'">주문목록</button>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel_forUser'">취소목록</button>
+                        <button style="margin: 0 0;" type="submit" class="site-btn" onclick="windowOpen()">주소지 관리</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+	<br><br><br>
+	<div style="text-align: left; margin-left: 200px;">
+		    <h5 style="font-weight: bold;">${user_name}님의 구매 취소 목록</h5>	
+	</div>
     <br>
     <table>
+    
         <thead>
             <tr>
                 <th width="15%">주문번호</th>
@@ -266,10 +289,17 @@
 								
 								
 			                </div>
+    <br><br><br><br><br>
     
-    
-
+    <%@ include file="instagram.jsp" %>
     <%@ include file="footer.jsp" %>
+    
+    <script>
+	   function windowOpen() { 
+	      var url = "/project/address_manage"
+	      window.open(url, "a", "width=1000, height=800, left=100, top=50"); 
+	   }
+	</script>
     
 </body>
 </html>

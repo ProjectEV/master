@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품평 작성</title>
 
-<meta name="description" content="Ashion Template">
+	<meta name="description" content="Ashion Template">
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
     
     <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -109,13 +108,10 @@
         
 	</style>
 
-
-
-
 </head>
 <body>
 					<div class="contact__form">
-                            <h4>상품평 작성</h4><br><br>
+                            <h4 style="font-weight: bold;">상품평 작성</h4><br><br><br>
                             <form method="post" action="/project/review" enctype="multipart/form-data">
                             
                            	    <img src="${pageContext.request.contextPath}/images/${file_name}" alt="상품 이미지">
@@ -148,6 +144,7 @@
 								
 						      	<br><br>
 						      	<input type="hidden" name="boards_userid" id="boards_userid" value="${user_id}" >
+						      	<input type="hidden" name="buydetail_no" id="buydetail_no" value="${param.buydetail_no}" >
 								<button type="submit" class="site-btn">작성완료</button>
 			                    <button type="reset" class="site-btn">다시작성</button>
                             </form>

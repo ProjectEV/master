@@ -20,6 +20,17 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.homeList(codeMap);
 	}	
 	
+	@Override
+	   public int findReview(int buydetail_no) {
+	      // TODO Auto-generated method stub
+	      return projectDAO.findReview(buydetail_no);
+	   }
+	   @Override
+	   public int updateBuydetailReview(int buydetail_no) {
+	      // TODO Auto-generated method stub
+	      return projectDAO.updateBuydetailReview(buydetail_no);
+	   }
+
 	
 	
 	
@@ -143,10 +154,11 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	
 	@Override
-	public List<BuyVO> listBuy(String userid) {
-		// TODO Auto-generated method stub
-		return projectDAO.listBuy(userid);
-	}
+    public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE) {
+       // TODO Auto-generated method stub
+       return projectDAO.listBuy(userid, start, mypagePageSIZE);
+    }
+
 	@Override
 	public List<BuydetailVO> listBuydetail(int[] buyno) {
 		// TODO Auto-generated method stub

@@ -2,14 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
-<title>TechNova</title>
+<title>제품상세페이지</title>
 <head>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -19,7 +16,6 @@
                 const quantity = $(this).val(); // 입력된 수량
                 
                 const remain = $(".remain").data("product-remain");
-                
 
                 if (quantity < 0 || isNaN(quantity)) {
                     alert("수량은 0 이상의 숫자만 가능합니다.");
@@ -43,62 +39,118 @@
 </script>
 
 <style>
-	.review-item {
-	   color: #e3c01c;
-	   margin-right: -4px;
-	}
-	
-	.inquiry-item {
-	   color: #e3c01c;
-	   margin-right: -4px;
-	} 
-	
-	.review-author {
-	    font-size: 25px; /* 크기 키우기 */
-	    font-weight: bold; /* 진하게 만들기 */
-	    color: #333; /* 색을 진하게 */
-	    margin-right: 10px;
-	    margin-bottom: 5px; /* 별과의 간격을 줄이기 위해 아래 여백 추가 */
-	}
-	
-	/* 날짜 스타일 (작성자 옆에 작게) */
-	.review-date {
-	    font-size: 14px; /* 작은 크기 */
-	    color: #777; /* 색을 회색으로 */
-	}
-	
-	/* 별점 스타일 */
-	.review-stars {
-	    margin-top: 5px; /* 별과 이름 사이의 간격을 조금 더 좁히기 */
-	    margin-bottom: 5px; /* 별 아래쪽의 간격을 줄이기 */
-	}
-	
-	/* 제목 스타일 (진하게) */
-	.review-title {
-	    font-size: 16px; /* 제목 크기 */
-	    font-weight: bold; /* 진하게 */
-	    margin: 10px 0;
-	}
-	
-	/* 내용 스타일 */
-	.review-content {
-	    font-size: 14px; /* 내용 크기 */
-	    color: #555; /* 내용 색상 */
-	    line-height: 1.6; /* 줄 간격 설정 */
-	}
-	
-	/* 별 아이콘 크기 */
-	.fa-star, .fa-star-o {
-	    color: gold; /* 별 색상 */
-	    font-size: 16px; /* 기본 크기 설정 */
-	    transform: scale(0.8); /* 크기 축소 */
-	}
-	
-	/* 별을 비워둔 아이콘 */
-	.fa-star-o {
-	    color: #ccc; /* 비어있는 별 색상 */
-	}
-</style>  
+.review-item {
+   color: #e3c01c;
+   margin-right: -4px;
+}
+
+.inquiry-item {
+   color: #e3c01c;
+   margin-right: -4px;
+} 
+
+.review-author {
+    font-size: 25px; /* 크기 키우기 */
+    font-weight: bold; /* 진하게 만들기 */
+    color: #333; /* 색을 진하게 */
+    margin-right: 10px;
+    margin-bottom: 5px; /* 별과의 간격을 줄이기 위해 아래 여백 추가 */
+}
+
+/* 날짜 스타일 (작성자 옆에 작게) */
+.review-date {
+    font-size: 14px; /* 작은 크기 */
+    color: #777; /* 색을 회색으로 */
+}
+
+/* 별점 스타일 */
+.review-stars {
+    margin-top: 5px; /* 별과 이름 사이의 간격을 조금 더 좁히기 */
+    margin-bottom: 5px; /* 별 아래쪽의 간격을 줄이기 */
+}
+
+/* 제목 스타일 (진하게) */
+.review-title {
+    font-size: 16px; /* 제목 크기 */
+    font-weight: bold; /* 진하게 */
+    margin: 10px 0;
+}
+
+/* 내용 스타일 */
+.review-content {
+    font-size: 14px; /* 내용 크기 */
+    color: #555; /* 내용 색상 */
+    line-height: 1.6; /* 줄 간격 설정 */
+}
+
+/* 별 아이콘 크기 */
+.fa-star, .fa-star-o {
+    color: gold; /* 별 색상 */
+    font-size: 16px; /* 기본 크기 설정 */
+    transform: scale(0.8); /* 크기 축소 */
+}
+
+/* 별을 비워둔 아이콘 */
+.fa-star-o {
+    color: #ccc; /* 비어있는 별 색상 */
+}
+
+
+.inquiry-content {
+    display: none;
+}
+
+.inquiry_list {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .inquiry-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .inquiry-header .q-marker {
+        font-size: 24px; /* Q 크기 조정 */
+        font-weight: bold;
+        color: #007bff; /* 파란색으로 강조 */
+        margin-right: 10px;
+    }
+
+    .inquiry-header .title {
+        font-size: 18px; /* 제목 크기 */
+        font-weight: bold;
+        flex-grow: 1;
+    }
+
+    .inquiry-header .date {
+        font-size: 12px; /* 날짜 크기 */
+        color: #777;
+    }
+
+    .inquiry-content {
+        margin-top: 10px;
+        padding-left: 10px;
+    }
+
+    .inquiry-content .a-marker {
+        font-size: 20px; /* A 크기 조정 */
+        font-weight: bold;
+        color: #28a745; /* 초록색으로 강조 */
+        margin-right: 10px;
+    }
+
+    .inquiry-content p {
+        margin: 0;
+    }
+    
+    .content-text {
+        margin-left: 30px; /* 들여쓰기 크기 조정 */
+    }
+</style>    
 		    
 </head>
 
@@ -326,27 +378,31 @@
                             </div>
                             
 							<div class="tab-pane" id="tabs-4" role="tabpanel">
-                                <h6>상품 문의</h6>
                                 <div>
-                                    <c:forEach var="inquiry" items="${inquiry_list}">
-	                         			<div class="inquiry_list">
-		                                 <p onclick="toggleContent('${inquiry.boards_userid}')" style="cursor: pointer;">
-		                                 <strong>제목:</strong> ${inquiry.boards_title}
-		                                 <strong>작성자:</strong> ${inquiry.boards_userid}
-		                                 <p><strong>내용:</strong> ${inquiry.boards_content}</p>
-		                             	 </p>
-        
-					                          <div id="content-${inquiry.boards_userid}" class="inquiry-content" style="display: none;">
-					                              <c:forEach var="adminInquiryList" items="${adminInquiryList}">
-					                                 <c:if test="${inquiry.boards_no ==adminInquiryList.boards_inquiry_conn}">
-					                                    <strong>작성자: 관리자</strong>
-					                                    <p><strong>내용:</strong> ${adminInquiryList.boards_content}</p>
-					                                 </c:if>
-					                              </c:forEach>
-									           </div>
-				          				</div>
-				               		</c:forEach>
-                               </div>
+                                   <c:forEach var="inquiry" items="${inquiry_list}">
+                                		<div class="inquiry_list">
+                                  <!-- Q Section -->
+		                                   <div class="inquiry-header">
+		                                       <span class="q-marker">Q</span>
+		                                       <span class="title">${inquiry.boards_title}</span>
+		                                       <span class="date">${inquiry.boards_regdate}</span>
+		                                   </div>
+		                                      <p class="content-text"><strong>내용:</strong> ${inquiry.boards_content}</p>
+		                                        <!-- A Section (Hidden by Default) -->
+			                                   <div id="content-${inquiry.boards_no}" class="inquiry-content" style="display: none;">
+			                                       <c:forEach var="adminInquiryList" items="${adminInquiryList}">
+			                                           <c:if test="${inquiry.boards_no == adminInquiryList.boards_inquiry_conn}">
+			                                               <div class="inquiry-header">
+			                                                   <span class="a-marker">A</span>
+			                                                     <p>${adminInquiryList.boards_content}</p>
+			                                               </div>
+			                                           </c:if>
+			                                       </c:forEach>
+			                                   </div>
+                                      		<button onclick="toggleContent('${inquiry.boards_no}')" class="site-btn" style="margin-top: 10px; font-size: 14px; padding: 5px 10px; ">관리자 답변 보기</button>
+                                  		</div>
+                              		</c:forEach>
+                            	</div>
                             </div>
                             
                         </div>

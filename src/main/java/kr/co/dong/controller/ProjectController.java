@@ -65,7 +65,8 @@ public class ProjectController {
 	public static int istartPage = 1;
 	public static int iendPage = 10;
 	public static int ipageListSIZE = 10;
-
+	
+	//관리자 화면 - 재고관리
 	@RequestMapping(value = "project/inventory", method = RequestMethod.GET)
 	public ModelAndView inventory(@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
 			@RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM) {
@@ -137,7 +138,6 @@ public class ProjectController {
 	}
 
 	public void updateUserGrade(String user_id) {
-		
 		int s = projectService.mypage_totalRecord(user_id);
 		
 		if (s != 0) {
@@ -164,6 +164,7 @@ public class ProjectController {
 		}
 	}
 
+	//로그아웃
 	@RequestMapping(value = "project/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, RedirectAttributes rttr) {
 		session.invalidate();
@@ -270,6 +271,7 @@ public class ProjectController {
 		return "product_detail";
 	}
 
+	//관리자 화면 - 재고관리 상세 페이지
 	@RequestMapping(value = "project/inventory_detail", method = RequestMethod.GET)
 	public String inventoryDetail(@RequestParam("product_id") String product_id, Model model) {
 		
@@ -282,16 +284,35 @@ public class ProjectController {
 		model.addAttribute("totalReview", totalReview);
 		model.addAttribute("product", productVO);
 
+		// 해당 제품에 대한 리뷰 조회
+		List<BoardsVO> reviewlist = projectService.reviewlist(product_id);
+		model.addAttribute("review_list", reviewlist);
+		
+		//카테고리 조회
+		Map<String, Object> codeMap = new HashMap<>();
+		codeMap.put("category", Integer.toString(productVO.getProduct_category()));
+		String category_main = projectService.selectCategory(codeMap);
+		model.addAttribute("category", category_main);
+		
+		// 해당 제품에 대한 문의 조회
+		List<BoardsVO> inquirylist = projectService.inquirylist(product_id);
+		model.addAttribute("inquiry_list",inquirylist);
+		
+		// 해당 제품 관리자 답변 조회
+		List<BoardsVO> adminInquiryList = projectService.detailAdminInquiryList(product_id);
+		model.addAttribute("adminInquiryList",adminInquiryList);
+
 		return "inventory_detail";
 	}
 
+	//관리자 화면 - 상품등록 (get)
 	@RequestMapping(value = "project/product_register", method = RequestMethod.GET)
 	public String productRegister() {
 		logger.info("관리자 글 작성 이동");
 		return "admin_post";
 	}
 
-	// 신규 product 등록
+	//관리자 화면 - 상품등록 (post)
 	@RequestMapping(value = "project/product_register", method = RequestMethod.POST)
 	public String productRegister(@RequestParam("files") List<MultipartFile> files, ProductVO productVO,
 			HttpServletRequest request, RedirectAttributes rttr) throws Exception {
@@ -333,6 +354,7 @@ public class ProjectController {
 		return "redirect:inventory";
 	}
 
+	// 재고관리 - 제품 수량 추가
 	@RequestMapping(value = "project/product_add", method = RequestMethod.POST)
 	public String productAdd(@RequestParam("product_add") int product_add,
 			@RequestParam("product_id") String product_id) {
@@ -341,6 +363,7 @@ public class ProjectController {
 		return "redirect:inventory_detail?product_id=" + product_id;
 	}
 
+	// 재고관리 - 제품수정 (get)
 	@RequestMapping(value = "project/product_update", method = RequestMethod.GET)
 	public String productUpdate(@RequestParam("product_id") String product_id, Model model) {
 		ProductVO productVO = projectService.productDetail(product_id);
@@ -348,6 +371,7 @@ public class ProjectController {
 		return "admin_update";
 	}
 
+	// 재고관리 - 제품수정 (post)
 	@RequestMapping(value = "project/product_update", method = RequestMethod.POST)
 	public String productUpdate(ProductVO productVO, RedirectAttributes attr, HttpServletRequest request)
 			throws Exception {
@@ -362,6 +386,7 @@ public class ProjectController {
 		return "redirect:inventory";
 	}
 
+	// 재고관리 - 제품삭제
 	@RequestMapping(value = "project/product_delete", method = RequestMethod.GET)
 	public String productDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr) {
 		int r = projectService.productDelete(product_id);
@@ -373,6 +398,7 @@ public class ProjectController {
 		return "redirect:inventory_detail?product_id=" + product_id;
 	}
 
+	// 재고관리 상세페이지에서 뒤로가기(원래 있던 페이지로)
 	@RequestMapping(value = "project/backToList", method = RequestMethod.GET)
 	public String backToList(@RequestParam("product_id") String product_id, Model model) {
 
@@ -393,7 +419,7 @@ public class ProjectController {
 		return "redirect:inventory?pageListNUM=" + pageListNUM + "&pageNUM=" + pageNUM;
 	}
 
-	// 주문/결제 페이지로 이동
+	// 주문/결제 페이지로 이동 (get)
 	@RequestMapping(value = "project/pay", method = RequestMethod.GET)
 	public ModelAndView pay(@RequestParam Map<String, Object> map, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response, Model model) throws Exception {
@@ -442,6 +468,7 @@ public class ProjectController {
 		return mav;
 	}
 
+	// 주문/결제 페이지로 이동 (post)
 	@RequestMapping(value = "project/pay", method = RequestMethod.POST)
 	public String pay(@RequestParam("buy_address") String buy_address, @RequestParam("buy_receive") String buy_receive,
 			HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr)
@@ -515,7 +542,7 @@ public class ProjectController {
 		return "login";
 	}
 
-	// 중복체크 처리
+	// 아이디 중복체크 (get)
 	@RequestMapping(value = "project/id_check", method = RequestMethod.GET)
 	public String id_check(@RequestParam("user_id") String user_id, HttpServletRequest request, Model model)
 			throws Exception {
@@ -525,6 +552,7 @@ public class ProjectController {
 		return "id_check";
 	}
 
+	// 아이디 중복체크 (post)
 	@RequestMapping(value = "project/id_check", method = RequestMethod.POST)
 	public String id_check(@RequestParam("user_id") String user_id, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes rttr, Model model) throws Exception {
@@ -538,13 +566,14 @@ public class ProjectController {
 		return "id_check";
 	}
 
-	// 아이디 찾기 처리
+	// 아이디 찾기 (get)
 	@RequestMapping(value = "project/id_search", method = RequestMethod.GET)
 	public String id_search() {
 		logger.info("아이디 찾기 화면");
 		return "id_search";
 	}
 
+	// 아이디 찾기 (post)
 	@RequestMapping(value = "project/id_search", method = RequestMethod.POST)
 	public String id_Search(@RequestParam Map<String, Object> map, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes rttr, Model model) throws Exception {
@@ -556,7 +585,7 @@ public class ProjectController {
 		model.addAttribute("id", id);
 
 		if (id == null) {
-			rttr.addFlashAttribute("msg", "존재하지 않는 아이디입니다.");
+			rttr.addFlashAttribute("msg", "회원정보가 존재하지 않습니다.");
 		} else {
 			rttr.addFlashAttribute("msg", "당신의 아이디는 " + id + "입니다.");
 		}
@@ -565,13 +594,14 @@ public class ProjectController {
 
 	}
 
-	// 비밀번호 찾기 처리
+	// 비밀번호 찾기 (get)
 	@RequestMapping(value = "project/pwd_search", method = RequestMethod.GET)
 	public String pwd_search() {
 		logger.info("비밀번호 찾기 화면");
 		return "pwd_search";
 	}
 
+	// 비밀번호 찾기 (post)
 	@RequestMapping(value = "project/pwd_search", method = RequestMethod.POST)
 	public String pwd_search(@RequestParam("user_id") String user_id, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes rttr, Model model) throws Exception {
@@ -695,95 +725,78 @@ public class ProjectController {
 		return "redirect:/project/address_manage";
 	}
 
-	public static int mypagePageSIZE = 10; // 한 페이지에 담을 게시글의 개수
-	public static int mypageTotalRecord = 0;
-	public static int mypageTotalPage = 1;
+	   public static int mypagePageSIZE = 5; // 한 페이지에 담을 게시글의 개수
+	   public static int mypageTotalRecord = 0;
+	   public static int mypageTotalPage = 1;
 
-	public static int mypageStartPage = 1;
-	public static int mypageEndPage = 10;
-	public static int mypagePageListSIZE = 10;
-	// public static int pageListNUM = 1;
+	   public static int mypageStartPage = 1;
+	   public static int mypageEndPage = 10;
+	   public static int mypagePageListSIZE = 10;
+	   
+	   // 마이페이지
+	   @RequestMapping(value = "project/mypage", method = RequestMethod.GET)
+	   public String ProductMypage(Model model, @RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
+	         @RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM, HttpSession session,
+	         HttpServletRequest request, HttpServletResponse response) {
+	      // 아이디 가져오기
+//	         String userid = session.getId();
+//	         String userid = "yoonho";
 
-	// 마이페이지로 이동
-	@RequestMapping(value = "project/mypage1", method = RequestMethod.GET)
-	public ModelAndView mypage(@RequestParam(value = "mypage_pageNUM", defaultValue = "1") int mypage_pageNUM,
-			@RequestParam(value = "mypage_pageListNUM", defaultValue = "1") int mypage_pageListNUM, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	      Map<String, Object> user = (Map) session.getAttribute("user");
+	      String userid = (String) user.get("user_id");
+	      
+	      mypageTotalRecord = projectService.mypage_totalRecord(userid); // del=0인 게시글의 총 개수
+	      mypageTotalPage = mypageTotalRecord / mypagePageSIZE;
+	      if (mypageTotalRecord % mypagePageSIZE != 0) {
+	         mypageTotalPage++;
+	      } // 결국 totalRecord ÷ pageSIZE 를 올림처리한 것과 동일함
 
-		Map<String, Object> user = (Map) session.getAttribute("user");
-		String user_id = (String) user.get("user_id");
+	      int start = (pageNUM - 1) * mypagePageSIZE;
 
-		mypageTotalRecord = projectService.mypage_totalRecord(user_id); // del=0인 게시글의 총 개수
-		mypageTotalPage = mypageTotalRecord / mypagePageSIZE;
-		if (mypageTotalRecord % mypagePageSIZE != 0) {
-			mypageTotalPage++;
-		} // 결국 totalRecord ÷ pageSIZE 를 올림처리한 것과 동일함
+	      mypageStartPage = (pageListNUM - 1) * mypagePageListSIZE + 1;
+	      mypageEndPage = mypageStartPage + mypagePageListSIZE - 1;
+	      if (mypageEndPage > mypageTotalPage) {
+	         mypageEndPage = mypageTotalPage;
+	      }
+	      
+	      model.addAttribute("totalPage", mypageTotalPage);
+	      model.addAttribute("startPage", mypageStartPage);
+	      model.addAttribute("pageListNUM", pageListNUM);
+	      model.addAttribute("endPage", mypageEndPage);
+	      
+	      // 결제건 데이터 가져오기
+	      List<BuyVO> VO = projectService.listBuy(userid, start, mypagePageSIZE);
+	      model.addAttribute("buy_list", VO);
 
-		int start = (mypage_pageNUM - 1) * mypagePageSIZE;
+	      int[] buyno = new int[100];
 
-		mypageStartPage = (mypage_pageListNUM - 1) * mypagePageListSIZE + 1;
-		mypageEndPage = mypageStartPage + mypagePageListSIZE - 1;
-		if (mypageEndPage > mypageTotalPage) {
-			mypageEndPage = mypageTotalPage;
-		}
+	      // 결제건 데이터에서 buy_no 뽑기
+	      for (int i = 0; i < VO.size(); i++) {
+	         BuyVO buyVO = VO.get(i);
+	         buyno[i] = buyVO.getBuy_no();
+	      }
 
-		// int end = start + pageSIZE - 1;
-		// 해당 pageNUM 을 가진 페이지에는 bno가 start 부터 end 까지인 게시글들이 보여짐
+	      // 결제상세건 데이터 가져오기
+	      List<BuydetailVO> detailVO = projectService.listBuydetail(buyno);
+	      model.addAttribute("buy_detail_list", detailVO);
 
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", projectService.listMypage(start, mypagePageSIZE, user_id));
-		mav.addObject("totalPage", mypageTotalPage);
-		mav.addObject("startPage", mypageStartPage);
-		mav.addObject("pageListNUM", mypage_pageListNUM);
-		mav.addObject("endPage", mypageEndPage);
-		mav.setViewName("mypage");
-		return mav;
+	      String[] productno = new String[100];
 
-	}
+	      // 결제상세건 데이터에서 buydetail_productid 뽑기
+	      for (int i = 0; i < detailVO.size(); i++) {
+	         BuydetailVO buyDetailVO = detailVO.get(i);
+	         productno[i] = buyDetailVO.getBuydetail_productid();
+	      }
 
-	// 마이페이지
-	@RequestMapping(value = "project/mypage", method = RequestMethod.GET)
-	public String ProductMypage(Model model, HttpSession session) {
-		// 아이디 가져오기
-//			String userid = session.getId();
-//			String userid = "yoonho";
+	      // 결제상세건 데이터에서 제품 데이터 가져오기
+	      List<ProductVO> productVO = projectService.mypageDetailProduct(productno);
+	      model.addAttribute("buy_detail_product_list", productVO);
+	      model.addAttribute("imageList", listSelect(productVO));            
 
-		Map<String, Object> user = (Map) session.getAttribute("user");
-		String userid = (String) user.get("user_id");
+	      return "mypage";
+	   }
 
-		// 결제건 데이터 가져오기
-		List<BuyVO> VO = projectService.listBuy(userid);
-		model.addAttribute("buy_list", VO);
-
-		int[] buyno = new int[100];
-
-		// 결제건 데이터에서 buy_no 뽑기
-		for (int i = 0; i < VO.size(); i++) {
-			BuyVO buyVO = VO.get(i);
-			buyno[i] = buyVO.getBuy_no();
-		}
-
-		// 결제상세건 데이터 가져오기
-		List<BuydetailVO> detailVO = projectService.listBuydetail(buyno);
-		model.addAttribute("buy_detail_list", detailVO);
-
-		String[] productno = new String[100];
-
-		// 결제상세건 데이터에서 buydetail_productid 뽑기
-		for (int i = 0; i < detailVO.size(); i++) {
-			BuydetailVO buyDetailVO = detailVO.get(i);
-			productno[i] = buyDetailVO.getBuydetail_productid();
-		}
-
-		// 결제상세건 데이터에서 제품 데이터 가져오기
-		List<ProductVO> productVO = projectService.mypageDetailProduct(productno);
-		model.addAttribute("buy_detail_product_list", productVO);
-		model.addAttribute("imageList", listSelect(productVO));            
-
-		return "mypage";
-	}
-
-	// 리뷰 작성 페이지로 이동
+	// 리뷰 작성 (get)
 	@RequestMapping(value = "project/review_form", method = RequestMethod.GET)
 	public String review_form(@RequestParam("product_id") String product_id, Model model, HttpSession session) {
 
@@ -795,7 +808,7 @@ public class ProjectController {
 		return "review_form";
 	}
 
-	// 리뷰 작성 후 '완료' 버튼 클릭해서 리뷰 등록
+	// 리뷰 작성 (post)
 	@RequestMapping(value = "project/review_form", method = RequestMethod.POST)
 	public String review(BoardsVO boardsVO, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
 		request.setCharacterEncoding("UTF-8");
@@ -813,7 +826,6 @@ public class ProjectController {
 	}
 	
 	public void updateProductAvgScore(String product_id) {
-		
 		int totalRecordTemp = projectService.totalReview(product_id);
 		
 		float productAvgScore = 0;
@@ -825,7 +837,6 @@ public class ProjectController {
 	}
 	
 	public void updateBuydetailCode() {
-		
 		List<BuydetailVO> salesList = projectService.listSales();
 		
 		for (BuydetailVO buydetail : salesList) {
@@ -839,75 +850,81 @@ public class ProjectController {
 				String code = code1 + code2 + code3;
 				
 				int r = projectService.updateBuydetailCode(buydetail_no, code);
-
 		}
 	}
 	
-			
-	// 리뷰 구분선
-	// -------------------------------------------------------------------------------------------------------------------
-	// -------------------------------------------------------------------------------------------------------------------
-	// -------------------------------------------------------------------------------------------------------------------
+	   // 리뷰작성 처리
+	   @RequestMapping(value = "project/review", method = RequestMethod.GET)
+	   public String review(@RequestParam("product_id") String product_id, @RequestParam("buydetail_no") int buydetail_no,
+	          Model model, HttpSession session, 
+	         HttpServletResponse response) throws Exception {
+	      logger.info("리뷰작성 화면");
+	      // session에 담겨있는 아이디 값 리뷰 데이터로 넘겨주기 위한 처리
+	      Map<String, Object> user = (Map) session.getAttribute("user");
+	      String userid = (String) user.get("user_id");
 
-	// 리뷰작성 처리
-	@RequestMapping(value = "project/review", method = RequestMethod.GET)
-	public String review(@RequestParam("product_id") String product_id, Model model, HttpSession session) {
-		logger.info("리뷰작성 화면");
-		// session에 담겨있는 아이디 값 리뷰 데이터로 넘겨주기 위한 처리
-		Map<String, Object> user = (Map) session.getAttribute("user");
-		String userid = (String) user.get("user_id");
+//	      String user_id = "yoonho";
+	      model.addAttribute("user_id", userid);
+	      
+	      int r = projectService.findReview(buydetail_no);
+	      if (r>0) {
+	         ScriptUtils.alertAndMovePage(response, "이미 리뷰를 작성하셨습니다.", "mypage");
+	         return "mypage";
+	      }
+	      
+	      
+	      ProductVO vo = projectService.productDetail(product_id);
+	      model.addAttribute("product", vo);
 
-//		String user_id = "yoonho";
-		model.addAttribute("user_id", userid);
+	      List<String> file_name = projectService.fileSelect(product_id);
 
-		ProductVO vo = projectService.productDetail(product_id);
-		model.addAttribute("product", vo);
+	      // 첫번째 사진만 가져옴
+	      model.addAttribute("file_name", file_name.get(0));
 
-		List<String> file_name = projectService.fileSelect(product_id);
+	      return "review";
+	   }
+	   
+	   @RequestMapping(value = "project/review", method = RequestMethod.POST)
+	   public String review(BoardsVO boardsVO, @RequestParam("files") List<MultipartFile> files,
+	         @RequestParam("buydetail_no") int buydetail_no, HttpServletRequest request, RedirectAttributes rttr, 
+	         HttpSession session, HttpServletResponse response) throws Exception {
+	      request.setCharacterEncoding("UTF-8");
+	      logger.info("리뷰내용" + boardsVO);
 
-		// 첫번째 사진만 가져옴
-		model.addAttribute("file_name", file_name.get(0));
+	      // 보드 테이블의 마지막 튜플 번호 조회
+	      int boards_no_last = projectService.boardsNoLast();
 
-		return "review";
-	}
+	      int r = projectService.review(boardsVO);
 
-	@RequestMapping(value = "project/review", method = RequestMethod.POST)
-	public String review(BoardsVO boardsVO, @RequestParam("files") List<MultipartFile> files,
-			HttpServletRequest request, RedirectAttributes rttr, HttpSession session, HttpServletResponse response)
-			throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		logger.info("리뷰내용" + boardsVO);
+	      // 다중 파일 저장
+	      String imagePath = "/C:\\uploads/";
 
-		// 보드 테이블의 마지막 튜플 번호 조회
-		int boards_no_last = projectService.boardsNoLast();
+	      for (MultipartFile file : files) {
+	         String uuid = UUID.randomUUID().toString();
+	         String filename = uuid + "_" + file.getOriginalFilename();
 
-		int r = projectService.review(boardsVO);
+	         File dest = new File(imagePath + filename);
+	         file.transferTo(dest);
 
-		// 다중 파일 저장
-		String imagePath = "/C:\\uploads/";
+	         FileVO fileVO = new FileVO();
+	         fileVO.setFile_name(filename);
+	         fileVO.setFile_path("/C:\\uploads/" + filename);
+	         fileVO.setFile_connection_id(Integer.toString(boards_no_last + 1));
 
-		for (MultipartFile file : files) {
-			String uuid = UUID.randomUUID().toString();
-			String filename = uuid + "_" + file.getOriginalFilename();
+	         projectService.fileUpload(fileVO);
+	      }
 
-			File dest = new File(imagePath + filename);
-			file.transferTo(dest);
+	      if (r > 0) {
+	         rttr.addFlashAttribute("msg", "완료");
+	      }
+	      
+	      int s = projectService.updateBuydetailReview(buydetail_no);
+	      
+	      return "home";
 
-			FileVO fileVO = new FileVO();
-			fileVO.setFile_name(filename);
-			fileVO.setFile_path("/C:\\uploads/" + filename);
-			fileVO.setFile_connection_id(Integer.toString(boards_no_last + 1));
+	   }
 
-			projectService.fileUpload(fileVO);
-		}
-
-		if (r > 0) {
-			rttr.addFlashAttribute("msg", "완료");
-		}
-		return "home";
-
-	}
-
+	// 주소 선택
 	@RequestMapping(value = "project/address_select", method = RequestMethod.GET)
 	public ModelAndView address_select(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -924,6 +941,7 @@ public class ProjectController {
 		return mav;
 	}
 
+	//장바구니
 	@RequestMapping(value = "project/cart", method = RequestMethod.GET)
 	public ModelAndView cart(HttpSession session, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -947,6 +965,7 @@ public class ProjectController {
 		return mav;
 	}
 
+	//장바구니 등록
 	@RequestMapping(value = "project/cart_register", method = RequestMethod.GET)
 	public String cartRegister(@RequestParam("product_id") String product_id, @RequestParam("amount") int amount,
 			HttpServletRequest request, RedirectAttributes rttr, HttpSession session, HttpServletResponse response,
@@ -999,6 +1018,7 @@ public class ProjectController {
 		return ResponseEntity.ok(itemCount);
 	}
 
+	//장바구니 삭제
 	@RequestMapping(value = "project/cart_delete", method = RequestMethod.GET)
 	public String cartDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr,
 			HttpSession session, HttpServletResponse response) throws Exception {
@@ -1012,46 +1032,53 @@ public class ProjectController {
 
 		return "redirect:cart";
 	}
+	
+	   @RequestMapping(value = "project/buyCancel", method = RequestMethod.GET)
+	   public String buyCancel(@RequestParam("buydetail_no") int buydetail_no, RedirectAttributes rttr,
+	         HttpSession session, HttpServletResponse response) throws Exception {
 
-	@RequestMapping(value = "project/buyCancel", method = RequestMethod.GET)
-	public String buyCancel(@RequestParam("buydetail_no") int buydetail_no, RedirectAttributes rttr,
-			HttpSession session, HttpServletResponse response) throws Exception {
+	      Map<String, Object> user = (Map) session.getAttribute("user");
+	      String user_id = (String) user.get("user_id");
 
-		Map<String, Object> user = (Map) session.getAttribute("user");
-		String user_id = (String) user.get("user_id");
+	      // 취소하려는 구매 상세정보 가져오기 (buydetail)
+	      BuydetailVO buydetailVO = projectService.buydetailDetail(buydetail_no);
+	      
+	      int reviewExistence = buydetailVO.getBuydetail_review();
+	      if (reviewExistence > 0) {
+	         ScriptUtils.alertAndMovePage(response, "리뷰를 작성한 후에는 구매를 취소할 수 없습니다.", "mypage");
+	         return "mypage";
+	      }
+	      
+	      int buy_no = 0;
+	      buy_no = buydetailVO.getBuydetail_buyno();
 
-		// 취소하려는 구매 상세정보 가져오기 (buydetail)
-		BuydetailVO buydetailVO = projectService.buydetailDetail(buydetail_no);
-		int buy_no = 0;
-		buy_no = buydetailVO.getBuydetail_buyno();
+	      // 가져온 구매 상세정보 (buydetail) 에서 외래키인 buy_no 값을 통해 구매정보 (buy) 가져오기
+	      BuyVO buyVO = projectService.buyDetail(buy_no);
 
-		// 가져온 구매 상세정보 (buydetail) 에서 외래키인 buy_no 값을 통해 구매정보 (buy) 가져오기
-		BuyVO buyVO = projectService.buyDetail(buy_no);
+	      int amount = buydetailVO.getBuydetail_amount();
+	      String product_id = buydetailVO.getBuydetail_productid();
 
-		int amount = buydetailVO.getBuydetail_amount();
-		String product_id = buydetailVO.getBuydetail_productid();
+	      // buydetail 에서 product_id 를 통해 제품 가격 (product_price) 을 가져오고 이를 amount 와 곱해서 지불했던 가격 계산
+	      int price = projectService.findProductPrice(product_id);
+	      int buydetailPrice = amount * price;
 
-		// buydetail 에서 product_id 를 통해 제품 가격 (product_price) 을 가져오고 이를 amount 와 곱해서 지불했던 가격 계산
-		int price = projectService.findProductPrice(product_id);
-		int buydetailPrice = amount * price;
+	      int s = projectService.cancelUpdateProduct(product_id, amount);
+	      int v = projectService.deleteBuydetail(buydetail_no);
+	      int r = projectService.cancelUpdateBuy(buy_no, buydetailPrice);
 
-		int s = projectService.cancelUpdateProduct(product_id, amount);
-		int v = projectService.deleteBuydetail(buydetail_no);
-		int r = projectService.cancelUpdateBuy(buy_no, buydetailPrice);
+	      int u = projectService.cancelDate(buydetail_no);
+	      
+//	      BuyVO buyVO2 = projectService.buyDetail(buy_no);
+//	      int buy_amount = buyVO2.getBuy_amount();
+	//
+//	      if (buy_amount == 0) {
+//	         int t = projectService.deleteBuy(buy_no);
+//	      }
 
-		int u = projectService.cancelDate(buydetail_no);
-		
-//		BuyVO buyVO2 = projectService.buyDetail(buy_no);
-//		int buy_amount = buyVO2.getBuy_amount();
-//
-//		if (buy_amount == 0) {
-//			int t = projectService.deleteBuy(buy_no);
-//		}
+	      ScriptUtils.alertAndMovePage(response, "구매를 취소했습니다.", "mypage");
 
-		ScriptUtils.alertAndMovePage(response, "구매를 취소했습니다.", "mypage");
-
-		return "redirect:mypage";
-	}
+	      return "redirect:mypage";
+	   }
 
 	// 조회된 제품의 이미지 조회
 	public List<FileVO> listSelect(List<ProductVO> list) {
@@ -1110,24 +1137,7 @@ public class ProjectController {
 		mav.setViewName("product_list");
 		return mav;
 	}	
-	
-	
-	
-//	// 키워드 검색
-//	@RequestMapping(value = "product/list", method = RequestMethod.GET)
-//	public String ProductSearch(@RequestParam("keyword") String keyword, HttpServletRequest request, Model model)
-//			throws Exception {
-//		request.setCharacterEncoding("UTF-8");
-//
-//		// 검색어 가지고 리스트 검색
-//		List<ProductVO> list = projectService.productSearch(keyword);
-//		model.addAttribute("list", list);
-//		model.addAttribute("imageList", listSelect(list));
-//
-//		return "product_list";
-//	}
 
-	
 	public static int plPageSIZE = 9; // 한 페이지에 담을 게시글의 개수
 	public static int plTotalRecord = 0;
 	public static int plTotalPage = 1;
@@ -1177,31 +1187,6 @@ public class ProjectController {
 
 	}	
 	
-	
-	
-	
-//	// 카테고리 검색
-//	@RequestMapping(value = "product/list/category", method = RequestMethod.GET)
-//	public String categorySearch(@RequestParam("category") int category, HttpServletRequest request, Model model,
-//			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
-//			@RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM) throws Exception {
-//		request.setCharacterEncoding("UTF-8");
-//
-//		Map<String, Object> categoryMap = new HashMap<>();
-//		categoryMap.put("category", category);
-//		
-//		
-//
-//		// 카테고리 검색
-//		List<ProductVO> list = projectService.categorySearch(categoryMap);
-//		model.addAttribute("list", list);
-//		model.addAttribute("imageList", listSelect(list));
-//
-//		return "product_list";
-//	}
-
-	
-	
 	public static int lcPageSIZE = 9; // 한 페이지에 담을 게시글의 개수
 	public static int lcTotalRecord = 0;
 	public static int lcTotalPage = 1;
@@ -1210,7 +1195,7 @@ public class ProjectController {
 	public static int lcEndPage = 10;
 	public static int lcPageListSIZE = 10;
 	
-	// 키워드 검색
+	//카테고리 검색
 	@RequestMapping(value = "project/list/category", method = RequestMethod.GET)
 	public ModelAndView categorySearch(@RequestParam("category") int category, HttpServletRequest request, Model model,
 			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
@@ -1254,24 +1239,6 @@ public class ProjectController {
 		// 검색어 가지고 리스트 검색
 
 	}		
-
-//	// 정렬 검색
-//	@RequestMapping(value = "product/list/order", method = RequestMethod.GET)
-//	public String orderSearch(@RequestParam("code") int code, HttpServletRequest request, Model model)
-//			throws Exception {
-//		request.setCharacterEncoding("UTF-8");
-//
-//		Map<String, Object> codeMap = new HashMap<>();
-//		codeMap.put("code", code);
-//
-//		// 정렬 검색
-//		List<ProductVO> list = projectService.orderSearch(codeMap);
-//		model.addAttribute("list", list);
-//		model.addAttribute("imageList", listSelect(list));
-//
-//		return "product_list";
-//	}
-
 	
 	public static int ocPageSIZE = 9; // 한 페이지에 담을 게시글의 개수
 	public static int ocTotalRecord = 0;
@@ -1281,7 +1248,7 @@ public class ProjectController {
 	public static int ocEndPage = 10;
 	public static int ocPageListSIZE = 10;
 	
-	// 키워드 검색
+	//정렬 검색
 	@RequestMapping(value = "project/list/order", method = RequestMethod.GET)
 	public ModelAndView orderSearch(@RequestParam("code") int code, HttpServletRequest request, Model model,
 			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
@@ -1325,9 +1292,8 @@ public class ProjectController {
 		// 검색어 가지고 리스트 검색
 
 	}		
-	
-	
-	
+
+	//관리자 - 사용자 구매 목록
 	public static int salPageSIZE = 20; // 한 페이지에 담을 게시글의 개수
 	public static int salTotalRecord = 0;
 	public static int salTotalPage = 1;
@@ -1381,6 +1347,7 @@ public class ProjectController {
 	public static int c1EndPage = 10;
 	public static int c1PageListSIZE = 10;
 	
+	//관리자 - 사용자 취소 목록
 	@RequestMapping(value = "project/cancel", method = RequestMethod.GET)
 	public ModelAndView cancel(Model model, HttpServletRequest request,
 			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
@@ -1415,9 +1382,6 @@ public class ProjectController {
 		
 		return mav;
 	}	
-
-	
-	
 	
 	public static int c2PageSIZE = 20; // 한 페이지에 담을 게시글의 개수
 	public static int c2TotalRecord = 0;
@@ -1427,6 +1391,7 @@ public class ProjectController {
 	public static int c2EndPage = 10;
 	public static int c2PageListSIZE = 10;
 	
+	//마이페이지 - 취소목록
 	@RequestMapping(value = "project/cancel_forUser", method = RequestMethod.GET)
 	public ModelAndView cancel(Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response,
 			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
@@ -1467,18 +1432,9 @@ public class ProjectController {
 		return mav;
 	}	
 	
-	
-	
-	
-	
-	
-	
 	// =======================================================================================================================
 	
-	
-	
-	
-		//상품문의 작성 처리
+		//상품문의 작성 (get)
 		@RequestMapping(value = "project/inquiry", method = RequestMethod.GET)
 		public String inquiry(HttpSession session, Model model, @RequestParam("product_id") String product_id) {
 			logger.info("삼푼문의 작성 페이지이동");
@@ -1495,31 +1451,25 @@ public class ProjectController {
 
 			// 첫번째 사진만 가져옴
 			model.addAttribute("file_name", file_name.get(0));
-
 			
 			return "inquiry";
 		}
 		
+		//상품문의 작성 (post)
 		@RequestMapping(value = "project/inquiry", method = RequestMethod.POST)
 		public String inquiry(Model model, BoardsVO boardsVO, HttpServletRequest request) throws Exception{
 			request.setCharacterEncoding("UTF-8");
-			
 			int r = projectService.inquiry(boardsVO);
 			
-				
 			return "redirect:/project/mypage";
 		}
 		
-		
-		//관리자 문의 답변 화면 처리
+		//관리자 - 상품문의 조회 (get)
 		@RequestMapping(value = "project/admin_inquiry", method = RequestMethod.GET)
 		public String admin_inquiry(Model model,HttpSession session	) {
-			
-			
 			Map<String,Object> user = (Map) session.getAttribute("user");
 			String user_id = (String) user.get("user_id");
 			model.addAttribute("user_id", user_id);
-			
 			
 			// 해당 제품에 대한 문의 조회
 			List<BoardsVO> inquirylist = projectService.adminInquirylist();
@@ -1528,7 +1478,7 @@ public class ProjectController {
 			return "admin_inquiry";
 		}
 		
-		//관리자 문의 답변달기 처리
+		//관리자 문의 답변 (get)
 		@RequestMapping(value = "project/admin_inquiry_form", method = RequestMethod.GET)
 		public String admin_inquiry_form(@RequestParam("boards_no") int boards_no,HttpSession session ,Model model) {
 			Map<String, Object> user = (Map) session.getAttribute("user");
@@ -1539,12 +1489,10 @@ public class ProjectController {
 			return "admin_inquiry_form";	
 		}
 		
-		
+		//관리자 문의 답변 (post)
 		@RequestMapping(value = "project/admin_inquiry_form", method = RequestMethod.POST)
 		public String admin_inquiry_form(Model model, BoardsVO boardsVO, HttpServletRequest request) throws Exception{
-			
 			int r = projectService.adminInquiryForm(boardsVO);
-			
 			model.addAttribute("r",r);
 			
 			return "redirect:admin_inquiry";

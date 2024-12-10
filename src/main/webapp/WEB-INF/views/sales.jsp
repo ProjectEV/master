@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>제품 구매 목록</title>
+    <title>구매목록(관리자)</title>
     <style>
         table {
             width: 80%;
@@ -86,8 +86,33 @@
 <body>
 
 <%@ include file="header.jsp" %>
-	<br>
-    <h3>제품 판매 목록 (관리자)</h3>
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/"><i class="fa fa-home"></i> 홈</a>
+                        <a href="/">관리자 페이지</a>
+                        <span> 제품판매목록 </span>
+                        <span style="width: 230px"></span>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
+                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    
+	<br><br><br>
+	<div style="text-align: left; margin-left: 200px;">
+		    <h5 style="font-weight: bold;">제품 판매 목록(관리자)</h5>	
+	</div>
     <br>
     <table>
         <thead>
@@ -133,7 +158,7 @@
                         			<span style="color: red;"> (취소됨) </span>
                         		</c:if>
                         	</h4>
-                        	<br>
+                        	<br>     
                         	<table class="detail-table-buy">
 						        <thead>
 						            <tr>
@@ -246,8 +271,9 @@
 			                </div>
     
     
-
-    <%@ include file="footer.jsp" %>
+    <br><br><br><br><br>
+    <%@ include file="instagram.jsp" %>
+	<%@ include file="footer.jsp" %>
     
 </body>
 </html>
