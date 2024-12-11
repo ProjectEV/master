@@ -1480,11 +1480,20 @@ public class ProjectController {
 		
 		//관리자 문의 답변 (get)
 		@RequestMapping(value = "project/admin_inquiry_form", method = RequestMethod.GET)
-		public String admin_inquiry_form(@RequestParam("boards_no") int boards_no,HttpSession session ,Model model) {
+		public String admin_inquiry_form(@RequestParam("boards_no") int boards_no,
+				@RequestParam("proudct_id") String product_id,
+				HttpSession session,Model model) {
 			Map<String, Object> user = (Map) session.getAttribute("user");
 			String user_id = (String) user.get("user_id");
 			model.addAttribute("user_id", user_id);
 			model.addAttribute("boards_no", boards_no);	
+			
+	       ProductVO vo = projectService.productDetail(product_id);
+	       model.addAttribute("product", vo);
+
+	       List<String> file_name = projectService.fileSelect(product_id);
+	       // 첫번째 사진만 가져옴
+	       model.addAttribute("file_name", file_name.get(0));
 			
 			return "admin_inquiry_form";	
 		}

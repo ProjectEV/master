@@ -7,17 +7,15 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <head>
-
-</head>
-<body>
-
-    <%@ include file="header.jsp" %>
-    
     <style>
       .shop__cart__table tbody tr td {
           padding: 17px 0;
       }
    </style>
+</head>
+<body>
+
+    <%@ include file="header.jsp" %>
 
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
@@ -28,10 +26,11 @@
                         <a href="/"><i class="fa fa-home"></i>Home</a>
                         <a href="/">마이페이지</a>
                         <span style="">주문목록</span>
-                        <span style="width: 500px"></span>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/mypage'">주문목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel_forUser'">취소목록</button>
-                        <button style="margin: 0 0;" type="submit" class="site-btn" onclick="windowOpen()">주소지 관리</button>
+                        <div style="float: right;">
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/mypage'">주문목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel_forUser'">취소목록</button>
+	                        <button style="margin: 0 0;" type="submit" class="site-btn" onclick="windowOpen()">배송지 관리</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -137,8 +137,6 @@
         }
     }
 }
-
-
 </style>
 
 </head>
@@ -156,12 +154,13 @@
                         <a href="/"><i class="fa fa-home"></i> 홈</a>
                         <a href="/">관리자 페이지</a>
                         <span> 재고관리 </span>
-                        <span style="width: 230px"></span>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                        <div style="float: right;">
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                    	</div>
                     </div>
                 </div>
             </div>
@@ -178,11 +177,11 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th width="45%" class="product_header">Product</th>
-                                    <th>Review</th>
-                                    <th width="25%">Price</th>
-                                    <th width="10%">Remain</th>
-                                    <th width="10%">Sales</th>
+                                    <th width="45%" class="product_header">제품명</th>
+                                    <th>리뷰평점</th>
+                                    <th width="25%">가격</th>
+                                    <th width="10%">남은수량</th>
+                                    <th width="10%">판매수량</th>
                                     <th></th>
                                 </tr>
                             </thead>

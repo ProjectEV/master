@@ -5,7 +5,7 @@
 <html lang="zxx">
 <head>
 <%@ include file="head.jsp" %>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
        $(document).ready(function() {
@@ -21,6 +21,14 @@
            });
        });
    </script>
+   
+   <style>
+   a.hover:hover {
+	   	color: white;
+	   	font-color: white;
+	   	background-color: #666666;
+   }
+   </style>
 
 </head>
 
@@ -41,60 +49,60 @@
 											<img style="width: 25px; height: 25px;" src="${pageContext.request.contextPath}/resources/images/nav_pc.png" alt="">
 											컴퓨터
 										</li>
-										<li><a href="/project/list/category?category=1" style="padding: 8px 0;">전체</a></li>
-										<li><a href="/project/list/category?category=11" style="padding: 8px 0;">Dell</a></li>
-		                                <li><a href="/project/list/category?category=12" style="padding: 8px 0;">삼성전자</a></li>
-		                                <li><a href="/project/list/category?category=13" style="padding: 8px 0;">LG전자</a></li>
-		                                <li><a href="/project/list/category?category=14" style="padding: 8px 0;">HP</a></li>
-		                                <li><a href="/project/list/category?category=15" style="padding: 8px 0;">Mac</a></li>
+										<li><a class="hover" href="/project/list/category?category=1" style="padding: 8px 3px;">전체</a></li>
+										<li><a class="hover" href="/project/list/category?category=11" style="padding: 8px 3px;">Dell</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=12" style="padding: 8px 3px;">삼성전자</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=13" style="padding: 8px 3px;">LG전자</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=14" style="padding: 8px 3px;">HP</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=15" style="padding: 8px 3px;">Mac</a></li>
 									</ul>
 									<ul style="display: inline-block; margin: 0 40px 0 0;">
 										<li style="width: 150px; font-size: 20px; color: white; border-bottom: 1px solid var(--bs-gray-300); padding: 0 20px 10px 0; margin: 0 0 10px 0;">
 											<img style="width: 25px; height: 25px; " src="${pageContext.request.contextPath}/resources/images/nav_note.png" alt="">
 											노트북
 										</li>
-										<li><a href="/project/list/category?category=2" style="padding: 8px 0;">전체</a></li>
-		                                <li><a href="/project/list/category?category=21" style="padding: 8px 0;">MacBook</a></li>
-		                                <li><a href="/project/list/category?category=22" style="padding: 8px 0;">그램</a></li>
-		                                <li><a href="/project/list/category?category=23" style="padding: 8px 0;">갤럭시북</a></li>
-		                                <li><a href="/project/list/category?category=24" style="padding: 8px 0;">레노버</a></li>
-		                                <li><a href="/project/list/category?category=25" style="padding: 8px 0;">MSI</a></li>
+										<li><a class="hover" href="/project/list/category?category=2" style="padding: 8px 3px;">전체</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=21" style="padding: 8px 3px;">MacBook</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=22" style="padding: 8px 3px;">그램</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=23" style="padding: 8px 3px;">갤럭시북</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=24" style="padding: 8px 3px;">레노버</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=25" style="padding: 8px 3px;">MSI</a></li>
 									</ul>
 									<ul style="display: inline-block; margin: 0 40px 0 0;">
 										<li style=" width: 150px; font-size: 20px; color: white; border-bottom: 1px solid var(--bs-gray-300); padding: 0 20px 10px 0; margin: 0 0 10px 0;">
 											<img style="width: 25px; height: 25px;" src="${pageContext.request.contextPath}/resources/images/nav_phone.png" alt="">
 											핸드폰
 										</li>
-										<li><a href="/project/list/category?category=3" style="padding: 8px 0;">전체</a></li>
-		                                <li><a href="/project/list/category?category=31" style="padding: 8px 0;">iPhone</a></li>
-		                                <li><a href="/project/list/category?category=32" style="padding: 8px 0;">갤럭시 S</a></li>
-		                                <li><a href="/project/list/category?category=33" style="padding: 8px 0;">LG</a></li>
-		                                <li><a href="/project/list/category?category=34" style="padding: 8px 0;">갤럭시 A</a></li>
-		                                <li><a href="/project/list/category?category=35" style="padding: 8px 0;">샤오미</a></li>
+										<li><a class="hover" href="/project/list/category?category=3" style="padding: 8px 3px;">전체</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=31" style="padding: 8px 3px;">iPhone</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=32" style="padding: 8px 3px;">갤럭시 S</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=33" style="padding: 8px 3px;">LG</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=34" style="padding: 8px 3px;">갤럭시 A</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=35" style="padding: 8px 3px;">샤오미</a></li>
 									</ul>									
 									<ul style="display: inline-block; margin: 0 40px 0 0;">
-										<li style=" width: 150px; font-size: 20px; color: white; border-bottom: 1px solid var(--bs-gray-300); padding: 0 20px 10px 0; margin: 0 0 10px 0;">
+										<li style=" width: 170px; font-size: 20px; color: white; border-bottom: 1px solid var(--bs-gray-300); padding: 0 20px 10px 0; margin: 0 0 10px 0;">
 											<img style="width: 25px; height: 25px;" src="${pageContext.request.contextPath}/resources/images/nav_cpu.png" alt="">
 											컴퓨터부품
 										</li>
-										<li><a href="/project/list/category?category=4" style="padding: 8px 0;">전체</a></li>
-		                                <li><a href="/project/list/category?category=41" style="padding: 8px 0;">CPU</a></li>
-		                                <li><a href="/project/list/category?category=42" style="padding: 8px 0;">RAM</a></li>
-		                                <li><a href="/project/list/category?category=43" style="padding: 8px 0;">SSD</a></li>
-		                                <li><a href="/project/list/category?category=44" style="padding: 8px 0;">HDD</a></li>
-		                                <li><a href="/project/list/category?category=45" style="padding: 8px 0;">메인보드</a></li>
+										<li><a class="hover" href="/project/list/category?category=4" style="padding: 8px 3px;">전체</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=41" style="padding: 8px 3px;">CPU</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=42" style="padding: 8px 3px;">RAM</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=43" style="padding: 8px 3px;">SSD</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=44" style="padding: 8px 3px;">HDD</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=45" style="padding: 8px 3px;">메인보드</a></li>
 									</ul>
 									<ul style="display: inline-block; margin: 0 0 0 0;">
 										<li style="width: 150px; font-size: 20px; color: white; border-bottom: 1px solid var(--bs-gray-300); padding: 0 20px 10px 0; margin: 0 0 10px 0;">
 											<img style="width: 25px; height: 25px;" src="${pageContext.request.contextPath}/resources/images/nav_etc.png" alt="">
 											기타
 										</li>
-										<li><a href="/project/list/category?category=51" style="padding: 8px 0;">태블릿</a></li>
-		                                <li><a href="/project/list/category?category=52" style="padding: 8px 0;">키보드</a></li>
-		                                <li><a href="/project/list/category?category=53" style="padding: 8px 0;">마우스</a></li>
-		                                <li><a href="/project/list/category?category=54" style="padding: 8px 0;">스피커</a></li>
-		                                <li><a href="/project/list/category?category=55" style="padding: 8px 0;">모니터</a></li>
-		                                <li><a href="/project/list/category?category=56" style="padding: 8px 0;">웹캠</a></li>
+										<li><a class="hover" href="/project/list/category?category=51" style="padding: 8px 3px;">태블릿</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=52" style="padding: 8px 3px;">키보드</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=53" style="padding: 8px 3px;">마우스</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=54" style="padding: 8px 3px;">스피커</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=55" style="padding: 8px 3px;">모니터</a></li>
+		                                <li><a class="hover" href="/project/list/category?category=56" style="padding: 8px 3px;">웹캠</a></li>
 									</ul>		
 	                            </ul>
 	                        </li>
@@ -111,9 +119,9 @@
                
                <div class="col-sm-4" style="padding: 17px 0 0 0; height: 90px;">
                   <div class="footer__newslatter">
-                       <form action="#">
+                       <form>
                         <input type="text" id="search-input" placeholder="검색어를 입력하세요." onkeydown="checkEnter(event)">
-	                        <button style="background: none;" class="site-btn" disabled><img style="height: 20px; width: 20px; background: none;" src="${pageContext.request.contextPath}/resources/images/search.png" alt=""></button>
+	                        <button style="background: none;" type="button" class="site-btn" onclick="btnSearch()"><img style="height: 20px; width: 20px; background: none;" src="${pageContext.request.contextPath}/resources/images/search.png" alt=""></button>
                        </form>
                    </div>       
                </div>
@@ -182,6 +190,16 @@
                 }
                 location.href = "/project/list/search?keyword="+keyword;
             }
+        }
+        
+        function btnSearch() {
+            var keyword = document.getElementById("search-input").value;
+            if (keyword.trim() === "") {
+                alert("검색어를 입력해주세요.");
+                return false; // 제출 방지
+            }
+            location.href = "/project/list/search?keyword="+keyword;
+            return false; // 제출 방지
         }
     </script>
     

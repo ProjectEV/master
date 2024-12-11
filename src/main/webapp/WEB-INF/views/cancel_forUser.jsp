@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+<%@ include file="head.jsp" %>
     <title>취소목록</title>
     <style>
         table {
@@ -80,11 +81,8 @@
        			font-weight: bold;
        			text-align: center;
        		}
-       		
        }       
-       
-      
-       
+
     </style>
     <script>
         function toggleDetails(orderId) {
@@ -98,9 +96,7 @@
     </script>
 </head>
 <body>
-
 	<%@ include file="header.jsp" %>
-
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -110,10 +106,11 @@
                         <a href="/"><i class="fa fa-home"></i>Home</a>
                         <a href="/">마이페이지</a>
                         <span style="">취소목록</span>
-                        <span style="width: 500px"></span>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/mypage'">주문목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel_forUser'">취소목록</button>
-                        <button style="margin: 0 0;" type="submit" class="site-btn" onclick="windowOpen()">주소지 관리</button>
+                        <div style="float: right;">
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/mypage'">주문목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel_forUser'">취소목록</button>
+	                        <button style="margin: 0 0;" type="submit" class="site-btn" onclick="windowOpen()">배송지 관리</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,7 +123,6 @@
 	</div>
     <br>
     <table>
-    
         <thead>
             <tr>
                 <th width="15%">주문번호</th>

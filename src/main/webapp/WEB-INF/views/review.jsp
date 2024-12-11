@@ -56,6 +56,7 @@
 
         /* .contact__form의 크기 고정 */
         .contact__form {
+        	width: 400px;
             text-align: center; /* 텍스트 가운데 정렬 */
         }
         
@@ -118,7 +119,7 @@
 								<input type="hidden" id="boards_productid" name="boards_productid" value="${product.product_id}">
                            	    <h5>${product.product_name}</h5>
                            	    
-                           	    <br><br><br>
+                           	    <br><br>
                                 <p class="form-label">상품 만족도 <span>*</span></p>
                             	<div class="review-stars">
                             		<div>

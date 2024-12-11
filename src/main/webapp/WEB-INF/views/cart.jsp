@@ -97,10 +97,10 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>제품명</th>
+                                    <th>가격</th>
+                                    <th>수량</th>
+                                    <th>총합</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -109,11 +109,11 @@
                             <c:set var = "total" value = "0" />
 
                             <c:forEach var="cart" items="${list }" varStatus="status">
-                            <c:forEach var="imageList" items="${imageList}">
+                            	<c:forEach var="imageList" items="${imageList}">
                                      	<c:if test="${imageList.file_connection_id == cart.cart_productid}">
-		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" 
-		 						data-product-remain="${cart.product_remain }" data-grade-discount="${grade.grade_discount }">
-                                    <td class="cart__product__item">
+		 								<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" 
+		 								data-product-remain="${cart.product_remain }" data-grade-discount="${grade.grade_discount }">
+                                    	<td class="cart__product__item">
                                         <img src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="" height="70px" width="70px">
                                         <div class="cart__product__item__title">
                                             <a href="product_detail?product_id=${cart.cart_productid}" class="product_name_ellipsis" style="text-decoration: none;"><h6>${cart.cart_productname}</h6></a>
@@ -252,7 +252,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        <a href="/project/product">Continue Shopping</a>
+                        <a href="/project/product">쇼핑 계속하기</a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
@@ -273,12 +273,12 @@
                 </div>
                 <div class="col-lg-4 offset-lg-2">
                     <div class="cart__total__procced">
-                        <h6>Cart total</h6>
+                        <h6>장바구니 총합</h6>
                         
                         <ul>
-                            <li>Subtotal <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
-                            <li>Discount ( ${grade.grade_discount}&#37; ) <span style="color: gray;" id="price-discount">- &#8361; <fmt:formatNumber value="${(grade.grade_discount*total)/100 }" pattern="#,###" /></span></li>
-                            <li>Total <span id="final-price">&#8361; <fmt:formatNumber value="${total-(grade.grade_discount*total)/100}" pattern="#,###" /></span></li>
+                            <li>총합 <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                            <li>할인 ( ${grade.grade_discount}&#37; ) <span style="color: gray;" id="price-discount">- &#8361; <fmt:formatNumber value="${(grade.grade_discount*total)/100 }" pattern="#,###" /></span></li>
+                            <li>총합 ( 할인적용 ) <span id="final-price">&#8361; <fmt:formatNumber value="${total-(grade.grade_discount*total)/100}" pattern="#,###" /></span></li>
                         </ul>
                         
                         <!-- <button type="submit" form="cartInfo" class="site-btn">&nbsp;&nbsp;&nbsp;&nbsp;Proceed to checkout&nbsp;&nbsp;&nbsp;&nbsp;</button> -->

@@ -431,7 +431,7 @@
 			                            </c:if>
 			                            <ul class="product__hover">
 			                                <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
-			                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+			                                <li><span id="wish"></span></li>
 			                                <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
 			                            </ul>
 			                        </div>

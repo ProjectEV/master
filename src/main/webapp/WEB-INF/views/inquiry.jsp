@@ -56,6 +56,7 @@
 
         /* .contact__form의 크기 고정 */
         .contact__form {
+        	width: 400px;
             text-align: center; /* 텍스트 가운데 정렬 */
         }
         

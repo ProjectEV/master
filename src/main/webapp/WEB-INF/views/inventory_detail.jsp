@@ -56,68 +56,68 @@
 </style>
 
 <style>
-.review-item {
-   color: #e3c01c;
-   margin-right: -4px;
-}
+	.review-item {
+	   color: #e3c01c;
+	   margin-right: -4px;
+	}
+	
+	.inquiry-item {
+	   color: #e3c01c;
+	   margin-right: -4px;
+	} 
+	
+	.review-author {
+	    font-size: 25px; /* 크기 키우기 */
+	    font-weight: bold; /* 진하게 만들기 */
+	    color: #333; /* 색을 진하게 */
+	    margin-right: 10px;
+	    margin-bottom: 5px; /* 별과의 간격을 줄이기 위해 아래 여백 추가 */
+	}
+	
+	/* 날짜 스타일 (작성자 옆에 작게) */
+	.review-date {
+	    font-size: 14px; /* 작은 크기 */
+	    color: #777; /* 색을 회색으로 */
+	}
+	
+	/* 별점 스타일 */
+	.review-stars {
+	    margin-top: 5px; /* 별과 이름 사이의 간격을 조금 더 좁히기 */
+	    margin-bottom: 5px; /* 별 아래쪽의 간격을 줄이기 */
+	}
+	
+	/* 제목 스타일 (진하게) */
+	.review-title {
+	    font-size: 16px; /* 제목 크기 */
+	    font-weight: bold; /* 진하게 */
+	    margin: 10px 0;
+	}
+	
+	/* 내용 스타일 */
+	.review-content {
+	    font-size: 14px; /* 내용 크기 */
+	    color: #555; /* 내용 색상 */
+	    line-height: 1.6; /* 줄 간격 설정 */
+	}
 
-.inquiry-item {
-   color: #e3c01c;
-   margin-right: -4px;
-} 
+	/* 별 아이콘 크기 */
+	.fa-star, .fa-star-o {
+	    color: gold; /* 별 색상 */
+	    font-size: 16px; /* 기본 크기 설정 */
+	    transform: scale(0.8); /* 크기 축소 */
+	}
 
-.review-author {
-    font-size: 25px; /* 크기 키우기 */
-    font-weight: bold; /* 진하게 만들기 */
-    color: #333; /* 색을 진하게 */
-    margin-right: 10px;
-    margin-bottom: 5px; /* 별과의 간격을 줄이기 위해 아래 여백 추가 */
-}
-
-/* 날짜 스타일 (작성자 옆에 작게) */
-.review-date {
-    font-size: 14px; /* 작은 크기 */
-    color: #777; /* 색을 회색으로 */
-}
-
-/* 별점 스타일 */
-.review-stars {
-    margin-top: 5px; /* 별과 이름 사이의 간격을 조금 더 좁히기 */
-    margin-bottom: 5px; /* 별 아래쪽의 간격을 줄이기 */
-}
-
-/* 제목 스타일 (진하게) */
-.review-title {
-    font-size: 16px; /* 제목 크기 */
-    font-weight: bold; /* 진하게 */
-    margin: 10px 0;
-}
-
-/* 내용 스타일 */
-.review-content {
-    font-size: 14px; /* 내용 크기 */
-    color: #555; /* 내용 색상 */
-    line-height: 1.6; /* 줄 간격 설정 */
-}
-
-/* 별 아이콘 크기 */
-.fa-star, .fa-star-o {
-    color: gold; /* 별 색상 */
-    font-size: 16px; /* 기본 크기 설정 */
-    transform: scale(0.8); /* 크기 축소 */
-}
-
-/* 별을 비워둔 아이콘 */
-.fa-star-o {
-    color: #ccc; /* 비어있는 별 색상 */
-}
+	/* 별을 비워둔 아이콘 */
+	.fa-star-o {
+    	color: #ccc; /* 비어있는 별 색상 */
+	}
 
 
-.inquiry-content {
-    display: none;
-}
+	.inquiry-content {
+    	display: none;
+	}
 
-.inquiry_list {
+	.inquiry_list {
         margin-bottom: 20px;
         padding: 10px;
         border: 1px solid #ccc;
@@ -167,6 +167,7 @@
     .content-text {
         margin-left: 30px; /* 들여쓰기 크기 조정 */
     }
+
 </style>   
 
 </head>
@@ -217,7 +218,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <h3>${product.product_name} <span>SAMSUNG</span></h3>
+                        <h3>${product.product_name} <span>${product.product_category}</span></h3>
                         
                         <!-- 별점, 상품평 갯수 표시 -->
                         <div class="rating">
@@ -319,13 +320,8 @@
 			                            <input type="hidden" name="product_id" value="${product.product_id}" />
 			                            <button type="submit" class="site-btn">수량 추가</button>
 			                        </form>
-			                        
 			                    </div>
-                            
-                            
-                            
-                            
-                            
+
                         </div>
                         <div class="product__details__widget">
                             <ul>
@@ -342,8 +338,7 @@
                                     <p>${product.product_sales }</p>
                                 </li>
                                 <li>
-                                    <span> 목록으로: </span>
-                                    <a href="/project/backToList?product_id=${product.product_id }"> backToList </a>
+                                    <a style="font-size: 15px;" href="/project/backToList?product_id=${product.product_id }"> 뒤로가기 </a>
                                 </li>
                                 
                             

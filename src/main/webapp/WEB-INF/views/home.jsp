@@ -15,6 +15,12 @@
 <body>
 
 <%@ include file="header.jsp" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+	    $(function () {
+	    	wishState2();
+	    });
+	</script>
 
 	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: ;">
 	  <div class="carousel-indicators">
@@ -86,7 +92,7 @@
 				                        
 				                        <ul class="product__hover">
 				                            <li><a href="${pageContext.request.contextPath}/images/${newList_image.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
-				                            <li><a href="javascript:void(0);" onclick="wishListAdd('${newList.product_id}');"><span class="icon_heart_alt"></span></a></li>
+				                            <li><span id="wish"></span></li>
 				                            <li><a href="/project/cart_register?product_id=${newList.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
 				                        </ul>
 				                    </div>
@@ -317,6 +323,72 @@
 	
 	<%@ include file="instagram.jsp" %>
 	<%@ include file="footer.jsp" %>
+	
+	<!-- 찜 유무 판별 -->
+    <script type="text/javascript">
+	    function wishListAddDetail(product_id) {
+	        $.ajax({
+	            url: '/project/wishlist/add',
+	            method: 'GET',
+	            data: {product_id: product_id},
+	            success: function() {
+					alert("관심목록에 추가되었습니다!");
+					wishState2();
+	            },
+	            error: function() {
+					alert("추가에 실패했습니다.");
+	            }
+	        });
+	    }
+	    
+	    function wishListDeleteDetail(product_id) {
+	        $.ajax({
+	            url: '/project/wishlist/delete',
+	            method: 'GET',
+	            data: {product_id: product_id},
+	            success: function() {
+					alert("관심목록에서 삭제 되었습니다!");
+					wishState2();
+	            },
+	            error: function() {
+					alert("삭제에 실패했습니다.");
+	            }
+	        });
+	    }
+	    
+	    function wishState2() {
+	        var productId = "${product.product_id}";
+	        $.ajax({
+	            url: '/project/wishlist/state',
+	            method: 'GET',
+	            data: { "product_id": productId },
+	            success: function (result) {
+	                var htmls = "";
+	                if (result === true) {
+	                    htmls += '<li><a style="background-color: #ca1515;" href="javascript:void(0);" onclick="wishListDeleteDetail(\'' + productId + '\');"><span style="color: white;" class="icon_heart_alt"></span></a></li>';
+	                } else {
+	                    htmls += '<li><a href="javascript:void(0);" onclick="wishListAddDetail(\'' + productId + '\');"><span class="icon_heart_alt"></span></a></li>';
+	                }
+	                $("#wish").html(htmls);
+	            },
+	            error: function () {
+	                alert("관심목록 판별에 실패하였습니다.");
+	            }
+	        });
+	    }
+	    
+	    function toggleContent(inquiryUserId) {
+            // boards_userid를 기준으로 고유 div 찾기
+            const contentDiv = document.getElementById('content-' + inquiryUserId);
+            
+            // 내용 보이거나 숨기기
+            if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
+                contentDiv.style.display = 'block';
+            } else {
+                contentDiv.style.display = 'none';
+            }
+        }
+    </script>
 
 
 </body>

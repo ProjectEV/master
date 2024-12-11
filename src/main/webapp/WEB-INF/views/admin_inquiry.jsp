@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>상품문의관리</title>
 <head>
+
 </head>
 
 <body>
@@ -22,12 +23,13 @@
                         <a href="/"><i class="fa fa-home"></i> 홈</a>
                         <a href="/">관리자 페이지</a>
                         <span> 제품판매목록 </span>
-                        <span style="width: 230px"></span>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                        <div style="float: right;">
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                    	</div>
                     </div>
                 </div>
             </div>
@@ -44,8 +46,9 @@
 	                        <table style="margin: 0 0 70px 0">
 		                        <thead>
 	                                <tr>
-	                                    <th width="45%" class="product_header">Product</th>
-	                                    <th width="35%">UserID</th>	                                  
+	                                    <th style="margin: 0 0 0 10px;" width="30%" class="product_header">문의내용</th>
+	                                    <th width="30%">제품 ID</th>	 
+	                                    <th width="30%">질문자 ID</th>                                
 	                                </tr>
 	                            </thead>
                                 	<c:forEach var="inquiry" items="${inquiry_list}">
@@ -59,8 +62,9 @@
 			                                            </div>
 			                                        </div>
 			                                    </td>
+			                                    <td>${inquiry.boards_productid}님</td>
 			                                    <td class="cart__price">${inquiry.boards_userid}님</td>
-			                                    <td class="cart__close" style="margin: 0 20px 0 0;"><button style="margin: 0 5px;" class="site-btn" onclick="location.href='admin_inquiry_form?boards_no=${inquiry.boards_no}'">답변작성</button></td>
+			                                    <td class="cart__close" style="margin: 0 0 0 0;"><a style="margin: 0 10px;" href="admin_inquiry_form?boards_no=${inquiry.boards_no}&proudct_id=${inquiry.boards_productid}">답변작성</a></td>
 			                                </tr>
 			                          </tbody>
 	  						  	</c:forEach>

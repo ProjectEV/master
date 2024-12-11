@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>제품목록</title>
 <head>
+<%@ include file="head.jsp" %>
 <style>
 
 .order {
