@@ -6,30 +6,17 @@ import java.util.Map;
 
 public interface ProjectDAO {
 	
-	
-	//홈 제품 목록
-	public List<ProductVO> homeList(Map<String, Object> codeMap);
-	
     public int findReview(int buydetail_no);
     public int updateBuydetailReview(int buydetail_no);
-	
-	
 	public int product_totalRecord();
 	public int mypage_totalRecord(String user_id);
 	public int address_totalRecord(String user_id);
 	public int cart_totalRecord(String user_id);
 	public int totalReview(String product_id);
-	
 	public int boardsReadCnt(int boards_no);
 	public List<BoardsVO> reviewlist(String product_id);
-	
-	
-	
 	public ProductVO productDetail(String product_id);
 	public GradeVO gradeDetail(String user_id);
-	
-	
-	//product 화면 호출 시 필요
 	public List<ProductVO> listProduct(int start, int productPageSIZE);
 	public List<ProductVO> listMypage(int start, int pageSIZE, String user_id);
 	public List<ProductVO> listProduct();
@@ -41,23 +28,10 @@ public interface ProjectDAO {
 	public List<BuydetailVO> listCancel(int start, int c1PageSIZE);
 	public List<BuydetailVO> listCancel(String user_id);
 	public List<BuydetailVO> listCancel(String user_id, int start, int c2PageSIZE);	
-	
-	
-	
-	
-	
 	public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE);
 	public List<BuydetailVO> listBuydetail(int[] buyno);
-	
-	
-	
 	public List<ProductVO> mypageDetailProduct(String[] productno);
-	
-	
-	//로그인
 	public Map<String, Object> projectLogin(Map<String, Object> map);
-	
-	
 	public int join(UserVO userVO);
 	public int pay(BuyVO buyVO);
 	public int review(BoardsVO boardsVO);
@@ -66,26 +40,15 @@ public interface ProjectDAO {
 	public int findGradeUser(String user_id);
 	public int findGradeTotalPrice(String user_id);
 	public int updateGrade(String user_id, int totalPrice, int grade, int discount, String gradename);
-	
-	
-	
-	
-	
 	public int productRegister(ProductVO productVO);
 	public int productDelete(String product_id);
 	public int productRemainPlus(int product_plus, String product_id);
-	
-	
 	public int productUpdate(ProductVO productVO);
 	public int productAdd(String product_id, int product_add);
-	
 	public int cartRegister(String user_id, String product_id, String product_name, int amount);
-	// public int cartUpdate(String user_id, String productId, int amount);
-	// public int cartUpdate(String user_id, List<CartVO> updateList);
 	public int cartUpdate(String user_id, String product_id, int cart_amount);
 	public int findCart(String product_id, String user_id);
 	public int findProductPrice(String product_id);
-	
 	public int remainCheck(List<CartVO> list);
 	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id, int totalPrice);
 	public int buyDetailRegister(List<CartVO> list, int u, int discount);
@@ -93,13 +56,9 @@ public interface ProjectDAO {
 	public int cartDelete(String user_id, String product_id);
 	public int findBuyno();
 	public int salesUpdate(List<CartVO> list);
-	
 	public AddressVO findMainAddress(String user_id);
-	
 	public int findProductNo(String product_id);
 	public List<ProductVO> findSameCategory(int category, String product_id);
-	
-	
 	public BuydetailVO buydetailDetail(int buydetail_no);
 	public BuyVO buyDetail(int buy_no);
 	public int cancelUpdateBuy(int buy_no, int buydetailPrice);
@@ -119,10 +78,7 @@ public interface ProjectDAO {
 	
 	//보드 테이블 마지막 튜플의 번호 조회
 	public int boardsNoLast();
-	
-	
-	
-	
+
 	//아이디 중복체크 처리
 	public int id_check(String user_id);
 		
@@ -134,9 +90,7 @@ public interface ProjectDAO {
 		
 	//비밀번호 변경 처리
 	public int pwd_change(String user_id, String user_password);
-				
-	
-	
+
 	//주소지 관리 주소지 리스트 조회
 	public List<AddressVO> addressManageSelect1 (String userid);
 	
@@ -160,35 +114,29 @@ public interface ProjectDAO {
 	
 	//카테고리 조회
 	public String selectCategory(Map<String, Object> codeMap);
-	
 
-	
-	
-	
-	
 	//검색
 	public List<ProductVO> productSearch(String keyword);
+	
 	public List<ProductVO> productSearch(String keyword, int start, int plPageSIZE);
 	
 	//카테고리 검색 
 	public List<ProductVO> categorySearch(Map<String, Object> categoryMap);
+	
 	public List<ProductVO> categorySearch(Map<String, Object> categoryMap, int start, int lcPageSIZE);
 	
 	//정렬 검색 
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap);
+	
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap, int start, int ocPageSIZE);
-	
-	
-	
+
 	public float findAvgScore(String product_id);
+	
 	public int updateAvgScore(String product_id, float productAvgScore);
-	
-	
-	
+
 	public List<ProductVO> listUserCartProduct(String user_id);
 	
 	public int updateBuydetailCode(int buydetail_no, String code);
-	
 	
 	//제품상세페이지에서 상품문의 띄우기
 	public List<BoardsVO> inquirylist(String product_id);
@@ -205,7 +153,17 @@ public interface ProjectDAO {
 	//사용자가 문의작성 처리
 	public int inquiry(BoardsVO boardsVO);
 	
+	//홈 제품 목록
+	public List<ProductVO> homeList(Map<String, Object> codeMap);
 	
+	//특정 제품에서 리뷰 이미지 모두 조회
+	public List<FileVO> listSelectReview(int[] fileReviewId);
+
+	//네이버 로그인 처리
+	public int naver_login(UserVO userDTO);
+	
+	//네이버 아이디 중복 처리
+	public int isEmailExists(String user_id);
 	
 	
 	

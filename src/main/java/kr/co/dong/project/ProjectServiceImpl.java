@@ -596,6 +596,24 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.selectCategory(codeMap);
 	}
 
+	@Override
+	public List<FileVO> listSelectReview(int[] fileReviewId) {
+		// TODO Auto-generated method stub
+		return projectDAO.listSelectReview(fileReviewId);
+	}
+
+	@Override
+	   public int naver_login(UserVO userDTO) {
+	      // TODO Auto-generated method stub
+	      
+	      if(projectDAO.isEmailExists(userDTO.getUser_id()) == 0) {
+	         
+	         return projectDAO.naver_login(userDTO);   
+	      } else {
+	         return 0;
+	      }
+	      
+	   }
 
 
 

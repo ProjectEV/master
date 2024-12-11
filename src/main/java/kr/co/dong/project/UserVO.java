@@ -1,14 +1,22 @@
 package kr.co.dong.project;
 
 public class UserVO {
-	private String user_id;
-	private String user_name;
-	private String user_password;
-	private String user_email;
-	private String user_birth;
-	private int user_admin;
-	private String user_phone;
-	private String user_joindate;
+	public String user_id;
+	public String user_name;
+	public String user_password;
+	public String user_email;
+	public String user_birth;
+	public int user_admin;
+	public String user_phone;
+	public String user_joindate;
+	
+	public UserVO(String user_name, String user_id, String user_phone, String user_password) {
+	      this.user_name = user_name;
+	      this.user_id = user_id;
+	      this.user_phone = user_phone;
+	      this.user_password = user_password;
+	   }
+	   
 	
 	
 	public String getUser_id() {

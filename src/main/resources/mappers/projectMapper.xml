@@ -777,7 +777,27 @@
 	    </foreach>
 	</select>
 
-
+	<!-- 특정 제품 상세페이지에서 리뷰 사진 모두 조회 -->
+	<select id="listSelectReview" parameterType="java.lang.Integer" resultType="FileVO">
+		select * 
+		from file
+		where file_connection_id in
+	    <foreach collection="array" item="fileReviewId" open="(" separator="," close=")">
+        	#{fileReviewId}
+        </foreach>
+ 	</select>
+ 	
+ 	<!-- 네이버 로그인 처리 -->
+     <insert id="naver_login" parameterType="UserVO">
+        insert into user(user_id, user_name, user_phone, user_admin, user_password)
+        values (#{user_id}, #{user_name}, #{user_phone}, 0, 12345678)
+     </insert>
+     
+     <select id="isEmailExists" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*)
+        from user
+        where user_id = #{user_id}
+     </select>
 
 
 

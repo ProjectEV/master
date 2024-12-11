@@ -64,7 +64,7 @@
             <div class="row">
                
             </div>
-            <form action="/project/product_register" method="post" class="checkout__form">
+            <form action="/project/product_register" method="post" class="checkout__form" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-8">
                         <div style="text-align: center; margin: 0 0 50px 0;">

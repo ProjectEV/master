@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,6 +58,11 @@ public class ProjectController {
 
 	@Inject
 	AuthService authService;
+	
+	@Autowired
+    public void SocialLoginController(AuthService authService) {
+        this.authService = authService;
+    }
 
 	public static int ipageSIZE = 10; // 한 페이지에 담을 게시글의 개수
 	public static int itotalRecord = 0;
@@ -173,27 +179,45 @@ public class ProjectController {
 	}
 
 	// 네이버 로그인 콜백
-	@RequestMapping(value = "project/naver_login", method = RequestMethod.GET)
-	public String naverCallback(@RequestParam("code") String code, @RequestParam("state") String state,
-			HttpSession session) {
-		try {
-			// 1. 액세스 토큰 발급
-			String accessToken = authService.getAccessToken(code);
+	   @RequestMapping(value ="product/naver_login", method = RequestMethod.GET)
+	    public String naverCallback(@RequestParam("code") String code, @RequestParam("state") String state,
+	          @RequestParam Map<String,Object> map,
+	          HttpSession session) {
+	        try {
+	            // 1. 액세스 토큰 발급
+	            String accessToken = authService.getAccessToken(code);
+	            session.setAttribute("accessToken",accessToken);
 
-			// 2. 사용자 정보 가져오기
-			NaverUserInfo userInfo = authService.getUserInfo(accessToken);
+	            // 2. 사용자 정보 가져오기
+	            UserVO userInfo = authService.getUserInfo(accessToken);
+	            
+	            int result = projectService.naver_login(userInfo);
+	               if (result > 0) {
+	                  logger.info("정보 저장 성공");
+	               } else {
+	                  logger.info("정보 저장 실패");
+	               }
+	            
+	    		HashMap<String, Object> naverLogin = new HashMap<String, Object>();
+	    		naverLogin.put("user_id", userInfo.getUser_id());
+	    		naverLogin.put("user_password", userInfo.getUser_password());
+	       		Map<String, Object> user = projectService.projectLogin(naverLogin);
+	    		session.setAttribute("user", user);
 
-			// 3. 세션에 사용자 정보 저장
-			session.setAttribute("socialUser", userInfo);
-
-			// 4. 메인 페이지로 리다이렉트
-			return "redirect:/";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "redirect:/login?error=true";
-		}
-	}
+	            // 3. 세션에 사용자 정보 저장
+	            //session.setAttribute("user", userInfo);
+//	            String user_id = userInfo.getUser_id();
+//	            System.out.print(user_id);
+//	            Map<String, Object> user = projectService.login(map);
+//	            map.put("user_id", user_id);
+	            
+	            // 4. 메인 페이지로 리다이렉트
+	            return "redirect:/";
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return "redirect:/login?error=true";
+	        }
+	    }
 	
 	// 제품 목록 화면에서 제품을 클릭했을 때 출력될 상세페이지 (product_detail.jsp)
 	@RequestMapping(value = "project/product_detail", method = RequestMethod.GET)
@@ -249,6 +273,17 @@ public class ProjectController {
 		// 해당 제품에 대한 리뷰 조회
 		List<BoardsVO> reviewlist = projectService.reviewlist(product_id);
 		model.addAttribute("review_list", reviewlist);
+		
+		// 모든 리뷰 객체에서 리뷰 id 뽑기
+		int[] reviewno = new int[100];
+		for (int i = 0; i < reviewlist.size(); i++) {
+			BoardsVO vo = reviewlist.get(i);
+			reviewno[i] = vo.getBoards_no();
+		}
+
+		// 리뷰 사진 모두 조회
+		List<FileVO> review_file = projectService.listSelectReview(reviewno);
+		model.addAttribute("review_file", review_file);
 
 		//해당 제품 이미지 조회
 		List<String> file_name = projectService.fileSelect(product_id);
@@ -796,35 +831,6 @@ public class ProjectController {
 	      return "mypage";
 	   }
 
-	// 리뷰 작성 (get)
-	@RequestMapping(value = "project/review_form", method = RequestMethod.GET)
-	public String review_form(@RequestParam("product_id") String product_id, Model model, HttpSession session) {
-
-		ProductVO productVO = projectService.productDetail(product_id);
-
-		session.getAttribute("user");
-		model.addAttribute("product", productVO);
-
-		return "review_form";
-	}
-
-	// 리뷰 작성 (post)
-	@RequestMapping(value = "project/review_form", method = RequestMethod.POST)
-	public String review(BoardsVO boardsVO, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		logger.info("내용" + boardsVO);
-		int r = projectService.review(boardsVO);
-		
-		String product_id = boardsVO.getBoards_productid();
-		
-		updateProductAvgScore(product_id);
-
-		if (r > 0) {
-			rttr.addFlashAttribute("msg", "추가에 성공하였습니다."); // 세션저장
-		}
-		return "redirect:mypage";
-	}
-	
 	public void updateProductAvgScore(String product_id) {
 		int totalRecordTemp = projectService.totalReview(product_id);
 		
@@ -853,7 +859,7 @@ public class ProjectController {
 		}
 	}
 	
-	   // 리뷰작성 처리
+	   // 리뷰작성 처리 (get)
 	   @RequestMapping(value = "project/review", method = RequestMethod.GET)
 	   public String review(@RequestParam("product_id") String product_id, @RequestParam("buydetail_no") int buydetail_no,
 	          Model model, HttpSession session, 
@@ -884,6 +890,7 @@ public class ProjectController {
 	      return "review";
 	   }
 	   
+	   // 리뷰작성 처리 (post)
 	   @RequestMapping(value = "project/review", method = RequestMethod.POST)
 	   public String review(BoardsVO boardsVO, @RequestParam("files") List<MultipartFile> files,
 	         @RequestParam("buydetail_no") int buydetail_no, HttpServletRequest request, RedirectAttributes rttr, 
@@ -1080,7 +1087,7 @@ public class ProjectController {
 	      return "redirect:mypage";
 	   }
 
-	// 조회된 제품의 이미지 조회
+	// 조회된 제품의 첫번째 이미지 조회
 	public List<FileVO> listSelect(List<ProductVO> list) {
 
 		// 리스트에 뜬 제품 아이디 모두 조회
@@ -1133,7 +1140,7 @@ public class ProjectController {
 		mav.addObject("totalPage", productTotalPage);
 		mav.addObject("startPage", productStartPage);
 		mav.addObject("pageListNUM", pageListNUM);
-		mav.addObject("endPage", productEndPage);
+		mav.addObject("endPage", productEndPage);		
 		mav.setViewName("product_list");
 		return mav;
 	}	

@@ -221,7 +221,7 @@
 		} else {
 			//경로 값을 설정하면서 IdCheckServlet 서블릿 클래스의 doGet() 실행
 			var url = "/project/id_check?user_id=" + document.join_form.user_id.value;
-			window.open(url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=200");
+			window.open(url, "_blank_1","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=600, height=700");
 		}
 	}
 

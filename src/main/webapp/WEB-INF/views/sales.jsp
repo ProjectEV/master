@@ -96,12 +96,13 @@
                         <a href="/"><i class="fa fa-home"></i> 홈</a>
                         <a href="/">관리자 페이지</a>
                         <span> 제품판매목록 </span>
-                        <span style="width: 230px"></span>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
-                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                        <div style="float: right;">
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/inventory'">재고관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/sales'">구매목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/cancel'">취소목록</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/admin_inquiry'">상품문의관리</button>
+	                        <button style="margin: 0 5px;" type="submit" class="site-btn" onclick="location.href='/project/product_register'">제품등록</button>
+                    	</div>
                     </div>
                 </div>
             </div>

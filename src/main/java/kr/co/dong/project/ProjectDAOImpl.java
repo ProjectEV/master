@@ -682,6 +682,25 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectOne(nameSpace + ".selectCategory", codeMap);
 	}
 
+	@Override
+	public List<FileVO> listSelectReview(int[] fileReviewId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listSelectReview", fileReviewId);
+	}
+	
+   @Override
+   public int naver_login(UserVO userDTO) {
+      // TODO Auto-generated method stub
+      return sqlSession.insert(nameSpace+".naver_login",userDTO);
+   }
+   
+   @Override
+   public int isEmailExists(String user_id) {
+      // TODO Auto-generated method stub
+      return sqlSession.selectOne(nameSpace+".isEmailExists", user_id);
+   }
+
+
 
 
 

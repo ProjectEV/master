@@ -13,10 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-	private final String clientId = ""; // 네이버 애플리케이션 ID
-    private final String clientSecret = ""; // 네이버 애플리케이션 Secret
-	
-	
+   private final String clientId = "UKU4azkZUS5fj9tK1XKf"; // 네이버 애플리케이션 ID
+    private final String clientSecret = "0sYLTZYnY9"; // 네이버 애플리케이션 Secret
+   
+   
     @Override
     public String getAccessToken(String code) {
         String url = "https://nid.naver.com/oauth2.0/token"
@@ -33,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response);
+      
             return jsonNode.get("access_token").asText(); // 액세스 토큰 추출
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse access token response", e);
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
 
     // 네이버 사용자 정보 요청
     @Override
-    public NaverUserInfo getUserInfo(String accessToken) {
+    public UserVO getUserInfo(String accessToken) {
         String url = "https://openapi.naver.com/v1/nid/me";
         
         RestTemplate restTemplate = new RestTemplate();
@@ -59,12 +60,14 @@ public class AuthServiceImpl implements AuthService {
             JsonNode jsonNode = objectMapper.readTree(response);  // 응답을 JSON으로 변환
             JsonNode responseNode = jsonNode.get("response");
 
-            String name = responseNode.get("name").asText();
-            String email = responseNode.get("email").asText();
+            String user_name = responseNode.get("name").asText();
+            String user_id = responseNode.get("email").asText();
+            String user_phone = responseNode.get("mobile").asText();
+            String user_password = "12345678";
             
             
 
-            return new NaverUserInfo(name, email); // NaverUserInfo 객체 반환
+            return new UserVO(user_name, user_id, user_phone, user_password); // NaverUserInfo 객체 반환
             
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse user info response", e);

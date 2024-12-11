@@ -75,20 +75,20 @@
     							<hr style="flex-grow: 1;">
 							</div>
                             <br>
-    						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=UKU4azkZUS5fj9tK1XKf&state=STATE_STRING&redirect_uri=http://localhost:8090/project/naver_login">
-        						<img src="https://static.nid.naver.com/oauth/big_g.PNG" alt="네이버 로그인 버튼" style="width: 200px; height: auto; ">
-    						</a>
+    							<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=UKU4azkZUS5fj9tK1XKf&state=STATE_STRING&redirect_uri=http://localhost:8090/product/naver_login">
+                          			<img src="https://static.nid.naver.com/oauth/big_g.PNG" alt="네이버 로그인 버튼" style="width: 200px; height: auto; ">
+                      			</a>
                         </div>
        
        <script>
        		function idSearch() {
 				var url = "/project/id_search";
-				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=400");
+				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=800, height=700");
 			}
        		
        		function pwdSearch() {
 				var url = "/project/pwd_search";
-				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=400");
+				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=800, height=700");
 			}	
        </script>
 	<%@ include file="foot.jsp" %> 
