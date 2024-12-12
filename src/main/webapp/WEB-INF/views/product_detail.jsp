@@ -151,11 +151,17 @@
         margin-left: 30px; /* 들여쓰기 크기 조정 */
     }
 </style>    
-		    
+          
 </head>
 
 <body>
     <%@ include file="header.jsp" %>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       $(function () {
+          wishState2();
+       });
+   </script>
     
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
@@ -180,23 +186,29 @@
                 <div class="col-lg-6">
                     <div class="product__details__pic">
                     
+                    
                         <div class="product__details__pic__left product__thumb nice-scroll">
-                        	<c:forEach var="file_name" items="${file_name}" varStatus="status">
-                        		<a class="pt active" href="#product-${status.index + 1}">
-	                                <img src="${pageContext.request.contextPath}/images/${file_name}" alt="">
-	                            </a>
-                        	</c:forEach>
+                           <c:forEach var="file_name" items="${file_name}" varStatus="status">
+                              <a class="pt active" href="#product-${status.index + 1}">
+                                   <img src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+                               </a>
+                           </c:forEach>
                         </div>
+                        
                         
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
-	                            <c:forEach var="file_name" items="${file_name}" varStatus="status">
-                                	<img data-hash="product-${status.index + 1}" class="product__big__img" src="${pageContext.request.contextPath}/images/${file_name}" alt="">
-	                        	</c:forEach>
+                               <c:forEach var="file_name" items="${file_name}" varStatus="status">
+                                   <img data-hash="product-${status.index + 1}" class="product__big__img" src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+                              </c:forEach>
                             </div>
                         </div>
+                        
+                        
                     </div>
                 </div>
+                
+                
                 
                 <div class="col-lg-6">
                     <div class="product__details__text">
@@ -205,84 +217,84 @@
                         <!-- 별점, 상품평 갯수 표시 -->
                         <div class="rating">
                             <c:choose>
-                                    		<c:when test="${product.avgScore < 0.25}">
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 0.75}">
-                                    			<i class="fa fa-star-half-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 1.25}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 1.75}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-half-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 2.25}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 2.75}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-half-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 3.25}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 3.75}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-half-o"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 4.25}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-o"></i>
-                                    		</c:when>
-                                    		<c:when test="${product.avgScore < 4.75}">
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star-half-o"></i>
-                                    		</c:when>
-                                    		<c:otherwise>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    			<i class="fa fa-star"></i>
-                                    		</c:otherwise>
-                                    	</c:choose>
+                                          <c:when test="${product.avgScore < 0.25}">
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 0.75}">
+                                             <i class="fa fa-star-half-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 1.25}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 1.75}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-half-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 2.25}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 2.75}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-half-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 3.25}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 3.75}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-half-o"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 4.25}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-o"></i>
+                                          </c:when>
+                                          <c:when test="${product.avgScore < 4.75}">
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star-half-o"></i>
+                                          </c:when>
+                                          <c:otherwise>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
+                                          </c:otherwise>
+                                       </c:choose>
                             <span>( ${totalReview} reviews )</span>
                         </div>
                         <div class="product__details__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
@@ -300,7 +312,7 @@
                                <a href="javascript:;" onclick="document.getElementById('cart').submit();" class="cart-btn"><span class="icon_bag_alt"></span> 장바구니</a>
                             </form>
                             <ul>
-	                            <li><span id="wish"></span></li>
+                               <li><span id="wish"></span></li>
                             </ul>
                         </div>
                         
@@ -337,70 +349,67 @@
                                 <p>${product.product_content}</p>
                             </div>
                             
-							<div class="tab-pane" id="tabs-3" role="tabpanel">
+                     		<div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div>
                                    <c:if test="${totalReview == 0}">
                                       <p>아직 등록된 리뷰가 없습니다. 첫 번째 리뷰를 등록해주세요!</p>
                                    </c:if>
                                    <c:forEach var="review_list" items="${review_list}">
-                                		<div class="review-item">
+                                      <div class="review-item">
                                  
-	                                       <p><strong class="review-author">${review_list.boards_userid}</strong>
-	                                       <span class="review-date">${review_list.boards_regdate}</span></p>
+                                          <p><strong class="review-author">${review_list.boards_userid}</strong>
+                                          <span class="review-date">${review_list.boards_regdate}</span></p>
                                      
-		                                   <div class="review-stars">
-		                                     <c:forEach begin="1" end="${review_list.boards_review_score}">
-		                                         <i class="fa fa-star"></i>
-		                                     </c:forEach>
-		                                     <c:forEach begin="1" end="${5-review_list.boards_review_score}">
-		                                         <i class="fa fa-star-o"></i>
-		                                     </c:forEach>
-		                                   </div>
+                                          <div class="review-stars">
+                                             <c:forEach begin="1" end="${review_list.boards_review_score}">
+                                                <i class="fa fa-star"></i>
+                                             </c:forEach>
+                                             <c:forEach begin="1" end="${5-review_list.boards_review_score}">
+                                                <i class="fa fa-star-o"></i>
+                                             </c:forEach>
+                                         </div>
                                      
-		                                   <p><strong class="review-title">${review_list.boards_title}</strong></p>
-		                                   	  <p class="review-content">${review_list.boards_content}</p>
-		                                   
-			                                   <c:forEach var="review_file" items="${review_file}">
-			                                   		<c:if test="${review_list.boards_no == review_file.file_connection_id}">
-			                                   			<img src="${pageContext.request.contextPath}/images/${review_file.file_name}">
-			                                   		</c:if>
-			                                   </c:forEach>
-                                		</div>
-                                		<hr>
-                               		</c:forEach>
+                                         <p><strong class="review-title">${review_list.boards_title}</strong></p>
+                                         <p class="review-content">${review_list.boards_content}</p>
+                                         
+										 <c:forEach var="review_file" items="${review_file}">
+	                                   		<c:if test="${review_list.boards_no.toString() == review_file.file_connection_id.toString()}">
+	                                   			<img style="width: 100px; height: 90px; display: inline; margin: 0 0 0 10px;" src="${pageContext.request.contextPath}/images/${review_file.file_name}">
+	                                   		</c:if>
+                                		 </c:forEach>
+                                         
+                                      </div>
+                                      <hr>
+                                     </c:forEach>
                                 </div>
                             </div>
                             
-							<div class="tab-pane" id="tabs-4" role="tabpanel">
+                     <div class="tab-pane" id="tabs-4" role="tabpanel">
                                 <div>
                                    <c:forEach var="inquiry" items="${inquiry_list}">
-                                 <div class="inquiry_list">
+                                      <div class="inquiry_list">
                                   <!-- Q Section -->
-                                   <div class="inquiry-header">
-                                       <span class="q-marker">Q</span>
-                                       <span class="title">${inquiry.boards_title}</span>
-                                       <span class="date">${inquiry.boards_regdate}</span>
-                                   </div>
-                                      <p class="content-text"><strong>내용:</strong> ${inquiry.boards_content}</p>
-
-                                        <!-- A Section (Hidden by Default) -->
-                                   <div id="content-${inquiry.boards_no}" class="inquiry-content" style="display: none;">
-                                       <c:forEach var="adminInquiryList" items="${adminInquiryList}">
-                                           <c:if test="${inquiry.boards_no == adminInquiryList.boards_inquiry_conn}">
-                                               <div class="inquiry-header">
-                                                   <span class="a-marker">A</span>
-                                                     <p>${adminInquiryList.boards_content}</p>
-                                               </div>
-                                           </c:if>
-                                       </c:forEach>
-                                   </div>
-
-                                      <button onclick="toggleContent('${inquiry.boards_no}')" class="site-btn" style="margin-top: 10px; font-size: 14px; padding: 5px 10px; ">관리자 답변 보기</button>
-                                  </div>
-                              </c:forEach>
-                            </div>
-
-
+                                         <div class="inquiry-header">
+                                             <span class="q-marker">Q</span>
+                                             <span class="title">${inquiry.boards_title}</span>
+                                             <span class="date">${inquiry.boards_regdate}</span>
+                                         </div>
+                                            <p class="content-text"><strong>내용:</strong> ${inquiry.boards_content}</p>
+                                              <!-- A Section (Hidden by Default) -->
+                                            <div id="content-${inquiry.boards_no}" class="inquiry-content" style="display: none;">
+                                                <c:forEach var="adminInquiryList" items="${adminInquiryList}">
+                                                    <c:if test="${inquiry.boards_no == adminInquiryList.boards_inquiry_conn}">
+                                                        <div class="inquiry-header">
+                                                            <span class="a-marker">A</span>
+                                                              <p>${adminInquiryList.boards_content}</p>
+                                                        </div>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                            <button onclick="toggleContent('${inquiry.boards_no}')" class="site-btn" style="margin-top: 10px; font-size: 14px; padding: 5px 10px; ">관리자 답변 보기</button>
+                                        </div>
+                                    </c:forEach>
+                               </div>
                             </div>
                             
                         </div>
@@ -410,44 +419,44 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="related__title">
-                        <h5>RELATED PRODUCTS</h5>
+                        <h5>관련 상품</h5>
                     </div>
                 </div>
                 
                 <c:if test="${size == 0 }">
-                	<p> 해당 카테고리 내에 다른 상품이 존재하지 않습니다. </p>
+                   <p> 해당 카테고리 내에 다른 상품이 존재하지 않습니다. </p>
                 </c:if>
                 
                 <c:forEach var="product" items="${randomProductList}" varStatus="status">
-	                <c:forEach var="imageList" items="${imageList}">
-	          			<c:if test="${imageList.file_connection_id == product.product_id}">
-		                	<div class="col-lg-3 col-md-4 col-sm-6">
-			                    <div class="product__item">
-			                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${imageList.file_name}">
-			                            <c:if test="${product.product_remain < 1}">
-			                            	<div class="label stockout">out of stock</div>
-			                            </c:if>
-			                            <ul class="product__hover">
-			                                <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
-				                            <li><a href="javascript:void(0);" onclick="wishListAdd('${product.product_id}');"><span class="icon_heart_alt"></span></a></li>
-			                                <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
-			                            </ul>
-			                        </div>
-			                        <div class="product__item__text">
-			                            <h6><a href="product_detail?product_id=${product.product_id}">${product.product_name }</a></h6>
-			                            <div class="rating">
-			                                <i class="fa fa-star"></i>
-			                                <i class="fa fa-star"></i>
-			                                <i class="fa fa-star"></i>
-			                                <i class="fa fa-star"></i>
-			                                <i class="fa fa-star"></i>
-			                            </div>
-			                            <div class="product__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
-			                        </div>
-			                    </div>
-		                	</div>
-		                </c:if>
-	                </c:forEach>
+                   <c:forEach var="imageList" items="${imageList}">
+                      <c:if test="${imageList.file_connection_id == product.product_id}">
+                         <div class="col-lg-3 col-md-4 col-sm-6">
+                             <div class="product__item">
+                                 <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${imageList.file_name}">
+                                     <c:if test="${product.product_remain < 1}">
+                                        <div class="label stockout">out of stock</div>
+                                     </c:if>
+                                     <ul class="product__hover">
+                                         <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                         <li><span id="wish"></span></li>
+                                         <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
+                                     </ul>
+                                 </div>
+                                 <div class="product__item__text">
+                                     <h6><a href="product_detail?product_id=${product.product_id}">${product.product_name }</a></h6>
+                                     <div class="rating">
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                     </div>
+                                     <div class="product__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
+                                 </div>
+                             </div>
+                         </div>
+                      </c:if>
+                   </c:forEach>
                 </c:forEach>
 
             </div>
@@ -456,22 +465,73 @@
     <!-- Product Details Section End -->
 
     <%@ include file="instagram.jsp" %>
-	<%@ include file="footer.jsp" %>
-	
-	<script>
-		function toggleContent(inquiryUserId) {
-	        // boards_userid를 기준으로 고유 div 찾기
-	        const contentDiv = document.getElementById('content-' + inquiryUserId);
-	        
-	        // 내용 보이거나 숨기기
-	        if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
-	            contentDiv.style.display = 'block';
-	        } else {
-	            contentDiv.style.display = 'none';
-	        }
-	    }  
-	
-	</script>
+   <%@ include file="footer.jsp" %>
+   
+      <!-- 찜 유무 판별 -->
+    <script type="text/javascript">
+       function wishListAddDetail(product_id) {
+           $.ajax({
+               url: '/project/wishlist/add',
+               method: 'GET',
+               data: {product_id: product_id},
+               success: function() {
+               alert("관심목록에 추가되었습니다!");
+               wishState2();
+               },
+               error: function() {
+               alert("추가에 실패했습니다.");
+               }
+           });
+       }
+       
+       function wishListDeleteDetail(product_id) {
+           $.ajax({
+               url: '/project/wishlist/delete',
+               method: 'GET',
+               data: {product_id: product_id},
+               success: function() {
+               alert("관심목록에서 삭제 되었습니다!");
+               wishState2();
+               },
+               error: function() {
+               alert("삭제에 실패했습니다.");
+               }
+           });
+       }
+       
+       function wishState2() {
+           var productId = "${product.product_id}";
+           $.ajax({
+               url: '/project/wishlist/state',
+               method: 'GET',
+               data: { "product_id": productId },
+               success: function (result) {
+                   var htmls = "";
+                   if (result === true) {
+                       htmls += '<li><a style="background-color: #ca1515;" href="javascript:void(0);" onclick="wishListDeleteDetail(\'' + productId + '\');"><span style="color: white;" class="icon_heart_alt"></span></a></li>';
+                   } else {
+                       htmls += '<li><a href="javascript:void(0);" onclick="wishListAddDetail(\'' + productId + '\');"><span class="icon_heart_alt"></span></a></li>';
+                   }
+                   $("#wish").html(htmls);
+               },
+               error: function () {
+                   alert("관심목록 판별에 실패하였습니다.");
+               }
+           });
+       }
+       
+       function toggleContent(inquiryUserId) {
+            // boards_userid를 기준으로 고유 div 찾기
+            const contentDiv = document.getElementById('content-' + inquiryUserId);
+            
+            // 내용 보이거나 숨기기
+            if (contentDiv.style.display === 'none' || contentDiv.style.display === '') {
+                contentDiv.style.display = 'block';
+            } else {
+                contentDiv.style.display = 'none';
+            }
+        }
+    </script>
 
 </body>
 

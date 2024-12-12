@@ -190,7 +190,6 @@
 		
 		        // 선택된 별점 개수를 구하여 변수에 저장
 		        const boards_review_score = $(this).parent().children('span.on').length;
-		        alert(boards_review_score);
 		
 		        // 'rating' 값을 hidden input에 저장
 		        $('#boards_review_score').val(boards_review_score);

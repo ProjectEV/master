@@ -49,7 +49,13 @@
                            <table style="margin: 0 0 70px 0">
                                <thead>
                                    <tr>
-                                       <th>${buy.buy_regdate}</th>
+                                       <th width="40%">${buy.buy_regdate}</th>
+                                       <th width="13%" style="text-align:center;"> 가격</th>
+                                       <th width="13%" style="text-align:center;">수량</th>
+                                       <th width="13%" style="text-align:center;">합계</th>
+                                       <th></th>
+                                       <th></th>
+                                       <th></th>
                                    </tr>
                                </thead>
                                <c:forEach var="buydetail" items="${buy_detail_list}">
@@ -61,11 +67,11 @@
                                                    <td class="cart__product__item">
                                                       <c:forEach var="imageList" items="${imageList}">
                                                       <c:if test="${imageList.file_connection_id == buydetailProduct.product_id}">
-                                                             <img style="style=width: 90px; height: 90px;" src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="">
+                                                             <img style="width: 100px; height: 90px;" src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="">
                                                      </c:if>
                                                   </c:forEach>
                                                        <div class="cart__product__item__title">
-                                                          <a href="/project/product_detail?product_id=${buydetailProduct.product_id}" style="text-decoration: none;"><h6>${buydetailProduct.product_name}</h6></a>
+                                                          <a href="product_detail?product_id=${buydetailProduct.product_id}" style="text-decoration: none;"><h6>${buydetailProduct.product_name}</h6></a>
                                                            <div class="rating">
 	                                                           <c:choose>
 	                                                               <c:when test="${buydetailProduct.avgScore < 0.25}">
@@ -149,9 +155,9 @@
                                                              </div>
                                                        </div>
                                                    </td>
-                                                   <td class="cart__price" style="text-align: center;"> 가격 <br> &#8361; <fmt:formatNumber value="${buydetailProduct.product_price}" pattern="#,###" /></td>
-                                                   <td class="cart__quantity" style="text-align: center;"> 수량 <br> ${buydetail.buydetail_amount}개</td>
-                                                   <td class="cart__total" style="text-align: center;"> 합계 <br> &#8361; <fmt:formatNumber value="${buydetailProduct.product_price * buydetail.buydetail_amount}" pattern="#,###" /></td>
+                                                   <td class="cart__price" style="margin: 0 0 0 20px; text-align:center;" > &#8361; <fmt:formatNumber value="${buydetailProduct.product_price}" pattern="#,###" /></td>
+                                                   <td class="cart__quantity" style="text-align:center;" > ${buydetail.buydetail_amount}개</td>
+                                                   <td class="cart__total" style="text-align:center;"> &#8361; <fmt:formatNumber value="${buydetailProduct.product_price * buydetail.buydetail_amount}" pattern="#,###" /></td>
                                                    <td class="cart__close" width="10%" style="text-align: center;"><a href="review?product_id=${buydetailProduct.product_id}&buydetail_no=${buydetail.buydetail_no}">상품평 작성</a></td>
                                                    <td class="cart__close" width="10%" style="text-align: center;"><a href="inquiry?product_id=${buydetailProduct.product_id}">상품 문의</a></td>
                                                    <td class="cart__close" width="8%" style="text-align: center;"><a href="buyCancel?buydetail_no=${buydetail.buydetail_no }"><span class="icon_close" style="width: 85px; border-radius: 50px;">취소</span></a></td>

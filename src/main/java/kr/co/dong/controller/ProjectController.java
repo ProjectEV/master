@@ -272,6 +272,12 @@ public class ProjectController {
 
 		// 해당 제품에 대한 리뷰 조회
 		List<BoardsVO> reviewlist = projectService.reviewlist(product_id);
+		
+		//리뷰 사용자 이름 별 처리
+		for (BoardsVO review : reviewlist) {
+	         review.setBoards_userid(maskString(review.getBoards_userid()));
+	    }
+		 
 		model.addAttribute("review_list", reviewlist);
 		
 		// 모든 리뷰 객체에서 리뷰 id 뽑기
@@ -284,6 +290,7 @@ public class ProjectController {
 		// 리뷰 사진 모두 조회
 		List<FileVO> review_file = projectService.listSelectReview(reviewno);
 		model.addAttribute("review_file", review_file);
+		
 
 		//해당 제품 이미지 조회
 		List<String> file_name = projectService.fileSelect(product_id);
@@ -305,6 +312,26 @@ public class ProjectController {
 		
 		return "product_detail";
 	}
+	
+	//리뷰 사용자 이름 별 처리
+	 public static String maskString(String input) {
+	        if (input == null || input.length() < 1) {
+	            throw new IllegalArgumentException("Input must have a length of 2 or more.");
+	        }
+
+	        int length = input.length();
+	        if (length == 1 || length == 2 || length == 3) {
+	            // 길이가 2 또는 3일 경우: 마지막 글자만 *로 바꾸기
+	            return input.substring(0, length - 1) + "*";
+	        } else {
+	            // 길이가 4 이상일 경우: 앞의 3글자를 제외한 뒷부분 전부 *로 바꾸기
+	            StringBuilder masked = new StringBuilder(input.substring(0, 3));
+	            for (int i = 3; i < length; i++) {
+	                masked.append("*");
+	            }
+	            return masked.toString();
+	        }
+	    }
 
 	//관리자 화면 - 재고관리 상세 페이지
 	@RequestMapping(value = "project/inventory_detail", method = RequestMethod.GET)
@@ -350,7 +377,7 @@ public class ProjectController {
 	//관리자 화면 - 상품등록 (post)
 	@RequestMapping(value = "project/product_register", method = RequestMethod.POST)
 	public String productRegister(@RequestParam("files") List<MultipartFile> files, ProductVO productVO,
-			HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+			HttpServletRequest request, RedirectAttributes rttr, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		logger.info("내용" + productVO);
 
@@ -376,6 +403,7 @@ public class ProjectController {
 
 		if (r > 0) {
 			rttr.addFlashAttribute("msg", "추가에 성공하였습니다."); // 세션저장
+			ScriptUtils.alertAndMovePage(response, "제품 등록이 완료되었습니다.", "inventory");
 		}
 		return "redirect:inventory";
 	}
@@ -565,7 +593,7 @@ public class ProjectController {
 
 	// 회원가입 정보 제출 + 등록
 	@RequestMapping(value = "project/join", method = RequestMethod.POST)
-	public String join(UserVO userVO, HttpServletRequest request, RedirectAttributes rttr) throws Exception {
+	public String join(UserVO userVO, HttpServletRequest request, RedirectAttributes rttr, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		logger.info("내용" + userVO);
 		int r = projectService.join(userVO);
@@ -573,7 +601,11 @@ public class ProjectController {
 
 		if (r > 0) {
 			rttr.addFlashAttribute("msg", "OK"); // 세션저장
+			ScriptUtils.alertAndMovePage(response, "회원가입에 성공했습니다." , "login");
 		}
+		
+		
+		
 		return "login";
 	}
 
@@ -757,7 +789,7 @@ public class ProjectController {
 		// 주소지 리스트 삭제
 		int result = projectService.addressManageDelete1(address_no);
 
-		return "redirect:/project/address_manage";
+		return "redirect:/project/address_manage"; 
 	}
 
 	   public static int mypagePageSIZE = 5; // 한 페이지에 담을 게시글의 개수
@@ -923,11 +955,12 @@ public class ProjectController {
 
 	      if (r > 0) {
 	         rttr.addFlashAttribute("msg", "완료");
+	         ScriptUtils.alertAndMovePage(response, "리뷰를 등록했습니다.", "mypage");
 	      }
 	      
 	      int s = projectService.updateBuydetailReview(buydetail_no);
 	      
-	      return "home";
+	      return "mypage";
 
 	   }
 
@@ -1464,9 +1497,13 @@ public class ProjectController {
 		
 		//상품문의 작성 (post)
 		@RequestMapping(value = "project/inquiry", method = RequestMethod.POST)
-		public String inquiry(Model model, BoardsVO boardsVO, HttpServletRequest request) throws Exception{
+		public String inquiry(Model model, BoardsVO boardsVO, HttpServletRequest request, HttpServletResponse response) throws Exception{
 			request.setCharacterEncoding("UTF-8");
 			int r = projectService.inquiry(boardsVO);
+			
+			if (r>0) {
+		        ScriptUtils.alertAndMovePage(response, "상품문의를 등록하였습니다.", "mypage");
+			}
 			
 			return "redirect:/project/mypage";
 		}
@@ -1507,11 +1544,14 @@ public class ProjectController {
 		
 		//관리자 문의 답변 (post)
 		@RequestMapping(value = "project/admin_inquiry_form", method = RequestMethod.POST)
-		public String admin_inquiry_form(Model model, BoardsVO boardsVO, HttpServletRequest request) throws Exception{
+		public String admin_inquiry_form(Model model, BoardsVO boardsVO, HttpServletRequest request, HttpServletResponse response) throws Exception{
 			int r = projectService.adminInquiryForm(boardsVO);
+			if (r>0) {
+		        ScriptUtils.alertAndMovePage(response, "문의답변을 완료했습니다.", "admin_inquiry");
+			}
 			model.addAttribute("r",r);
 			
-			return "redirect:admin_inquiry";
+			return "redirect:/project/admin_inquiry";
 		}
 		
 		//찜 목록
@@ -1520,7 +1560,6 @@ public class ProjectController {
 			
 			Map<String, Object> user = (Map)session.getAttribute("user");
 			String userid = (String)user.get("user_id");
-//			String userid = "yoonho";
 			
 		    if (userid.isEmpty()) {
 		    	//알럴트 문 추가
@@ -1566,7 +1605,6 @@ public class ProjectController {
 		    // 사용자 정보 가져오기
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
 		    String userid = (String) user.get("user_id");
-//		    String userid = "yoonho"; // 테스트용 고정값
 
 		    if (userid.isEmpty()) {
 		        return "redirect:/login"; // 로그인 필요
@@ -1602,10 +1640,8 @@ public class ProjectController {
 		        cookie.setMaxAge(30 * 24 * 60 * 60); // 30일 유지
 		        response.addCookie(cookie);
 
-//		        return ResponseEntity.ok().build();
 		        return "redirect:/";
 		    } catch (UnsupportedEncodingException e) {
-//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		    	return "redirect:/";
 		    }
 		}
@@ -1618,7 +1654,6 @@ public class ProjectController {
 		    // 사용자 정보 가져오기
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
 		    String userid = (String) user.get("user_id");
-//		    String userid = "yoonho";
 
 		    if (userid.isEmpty()) {
 		        return "redirect:/login"; // 로그인 필요
@@ -1676,13 +1711,13 @@ public class ProjectController {
 		                                   HttpSession session, HttpServletRequest request) {
 		    // 사용자 정보 가져오기
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
-		    String userId = "yoonho";
+		    String userid = (String) user.get("user_id");
 
-		    if (userId.isEmpty()) {
+		    if (userid.isEmpty()) {
 		        return false;
 		    }
 
-		    String cookieName = "wishlist_" + userId;
+		    String cookieName = "wishlist_" + userid;
 		    String wishlist = "";
 
 		    // 쿠키에서 사용자 쿠키 값 가져오기
