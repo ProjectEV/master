@@ -1560,14 +1560,8 @@ public class ProjectController {
 			
 			Map<String, Object> user = (Map)session.getAttribute("user");
 			String userid = (String)user.get("user_id");
-			
-		    if (userid.isEmpty()) {
-		    	//알럴트 문 추가
-		        return "redirect:/login"; // 로그인 필요
-		    }
 
 		    String cookieName = "wishlist_" + userid; // 계정별 쿠키 이름 생성
-
 		    Cookie[] cookies = request.getCookies(); // 요청에서 쿠키 가져오기
 		    String wishlist = "";
 
@@ -1605,10 +1599,6 @@ public class ProjectController {
 		    // 사용자 정보 가져오기
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
 		    String userid = (String) user.get("user_id");
-
-		    if (userid.isEmpty()) {
-		        return "redirect:/login"; // 로그인 필요
-		    }
 
 		    String cookieName = "wishlist_" + userid;
 		    String wishlist = "";
@@ -1655,7 +1645,7 @@ public class ProjectController {
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
 		    String userid = (String) user.get("user_id");
 
-		    if (userid.isEmpty()) {
+		    if (userid.isEmpty() || user == null) {
 		        return "redirect:/login"; // 로그인 필요
 		    }
 
@@ -1712,10 +1702,6 @@ public class ProjectController {
 		    // 사용자 정보 가져오기
 		    Map<String, Object> user = (Map<String, Object>) session.getAttribute("user");
 		    String userid = (String) user.get("user_id");
-
-		    if (userid.isEmpty()) {
-		        return false;
-		    }
 
 		    String cookieName = "wishlist_" + userid;
 		    String wishlist = "";

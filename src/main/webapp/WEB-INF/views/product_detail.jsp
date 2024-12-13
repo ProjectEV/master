@@ -438,7 +438,7 @@
                                      </c:if>
                                      <ul class="product__hover">
                                          <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                         <li><span id="wish"></span></li>
+				                         <li><a href="javascript:void(0);" onclick="wishListAdd('${product.product_id}');"><span class="icon_heart_alt"></span></a></li>
                                          <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
                                      </ul>
                                  </div>
@@ -475,11 +475,11 @@
                method: 'GET',
                data: {product_id: product_id},
                success: function() {
-               alert("관심목록에 추가되었습니다!");
-               wishState2();
+	               alert("관심목록에 추가되었습니다!");
+	               wishState2();
                },
                error: function() {
-               alert("추가에 실패했습니다.");
+               	   alert("추가에 실패했습니다.");
                }
            });
        }
@@ -490,11 +490,11 @@
                method: 'GET',
                data: {product_id: product_id},
                success: function() {
-               alert("관심목록에서 삭제 되었습니다!");
-               wishState2();
+	               alert("관심목록에서 삭제 되었습니다!");
+	               wishState2();
                },
                error: function() {
-               alert("삭제에 실패했습니다.");
+               	   alert("삭제에 실패했습니다.");
                }
            });
        }
@@ -515,7 +515,7 @@
                    $("#wish").html(htmls);
                },
                error: function () {
-                   alert("관심목록 판별에 실패하였습니다.");
+
                }
            });
        }

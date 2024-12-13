@@ -50,6 +50,7 @@
 			<mapping path="/project/cart" />
 			<mapping path="/project/cart_register" />
 			<mapping path="/project/mypage" />
+			<mapping path="/project/wishlist" />
 			<beans:ref bean="auth" />
 		</interceptor>
 		<interceptor>

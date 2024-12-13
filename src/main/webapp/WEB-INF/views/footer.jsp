@@ -61,7 +61,8 @@
 					alert("관심목록에 추가되었습니다!");
 	            },
 	            error: function() {
-					alert("관심목록 추가에 실패하였습니다!");
+					alert("로그인이 필요합니다.");
+					location.href="/project/login";
 	            }
 	        });
 	    }

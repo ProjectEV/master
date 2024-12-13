@@ -16,8 +16,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 	private SqlSession sqlSession;
 	
 	private static final String nameSpace="kr.co.dong.projectMapper";
-	
-	
 
 	@Override
 	public List<ProductVO> homeList(Map<String, Object> codeMap) {
@@ -26,18 +24,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}	
 	
 	@Override
-	   public int findReview(int buydetail_no) {
-	      // TODO Auto-generated method stub
-	      return sqlSession.selectOne(nameSpace + ".findReview", buydetail_no);
-	   }
-	   @Override
-	   public int updateBuydetailReview(int buydetail_no) {
-	      // TODO Auto-generated method stub
-	      return sqlSession.update(nameSpace + ".updateBuydetailReview", buydetail_no);
-	   }
-
-	
-	
+    public int findReview(int buydetail_no) {
+       // TODO Auto-generated method stub
+       return sqlSession.selectOne(nameSpace + ".findReview", buydetail_no);
+    }
+    @Override
+    public int updateBuydetailReview(int buydetail_no) {
+       // TODO Auto-generated method stub
+       return sqlSession.update(nameSpace + ".updateBuydetailReview", buydetail_no);
+    }
 	
 	@Override
 	public int product_totalRecord() {
@@ -64,9 +59,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".totalReview", product_id);
 	}
-	
-	
-	
 
 	@Override
 	public int boardsReadCnt(int boards_no) {
@@ -79,10 +71,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".reviewlist", product_id);
 	}
-	
-	
-	
-	
+
 	@Override
 	public ProductVO productDetail(String product_id) {
 		// TODO Auto-generated method stub
@@ -93,11 +82,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace+".gradeDetail", user_id);
 	}
-	
-	
-	
-	
-	
+
 	@Override
 	public List<ProductVO> listProduct(int start, int productPageSIZE) {
 		// TODO Auto-generated method stub
@@ -170,19 +155,16 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("pageSIZE", c2PageSIZE);
 		return sqlSession.selectList(nameSpace + ".listCancelPaging2", map);
 	}		
-	
-	
-	
-	
+
 	@Override
-	   public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE) {
+	public List<BuyVO> listBuy(String userid, int start, int mypagePageSIZE) {
 	      // TODO Auto-generated method stub
 	      HashMap<String, Object> map = new HashMap<String, Object>();
 	      map.put("userid", userid);
 	      map.put("start", start);
 	      map.put("pageSIZE", mypagePageSIZE);
 	      return sqlSession.selectList(nameSpace + ".listBuy", map);
-	   }
+	 }
 
 	@Override
 	public List<BuydetailVO> listBuydetail(int[] buyno) {
@@ -195,8 +177,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".mypageDetailProduct", productno);
 	}
-	
-	
 
 	@Override
 	public Map<String, Object> projectLogin(Map<String, Object> map) {
@@ -250,15 +230,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("gradename", gradename);
 		return sqlSession.update(nameSpace + ".updateGrade", map);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@Override
 	public int productRegister(ProductVO productVO) {
 		// TODO Auto-generated method stub
@@ -277,10 +249,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("product_id", product_id);
 		return sqlSession.update(nameSpace+".productRemainPlus", map);
 	}
-	
-	
-	
-	
+
 	@Override
 	public int productUpdate(ProductVO productVO) {
 		// TODO Auto-generated method stub
@@ -295,9 +264,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("product_add", product_add);
 		return sqlSession.update(nameSpace+".productAdd", map);
 	}
-	
-	
-	
+
 	@Override
 	public int cartRegister(String user_id, String product_id, String product_name, int amount) {
 		// TODO Auto-generated method stub
@@ -308,8 +275,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("amount", amount);
 		return sqlSession.insert(nameSpace + ".cartRegister", map);
 	}
-	
-	
+
 	@Override
 	public int cartUpdate(String user_id, String product_id, int cart_amount) {
 		// TODO Auto-generated method stub
@@ -332,10 +298,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".findProductPrice", product_id);
 	}
-	
-	
-	
-	
+
 	@Override
 	public int remainCheck(List<CartVO> list) {
 		// TODO Auto-generated method stub
@@ -384,10 +347,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.update(nameSpace + ".salesUpdate", list);
 	}
-	
-	
-	
-	
+
 	@Override
 	public AddressVO findMainAddress(String user_id) {
 		// TODO Auto-generated method stub
@@ -406,10 +366,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("product_id", product_id);
 		return sqlSession.selectList(nameSpace + ".findSameCategory", map);
 	}
-	
-	
-	
-	
+
 	@Override
 	public BuydetailVO buydetailDetail(int buydetail_no) {
 		// TODO Auto-generated method stub
@@ -451,9 +408,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(nameSpace + ".cancelDate", buydetail_no);
 	}	
-	
-	
-	
+
 	@Override
 	public int fileUpload(FileVO fileVO) {
 		// TODO Auto-generated method stub
@@ -477,12 +432,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".boardsNoLast");
 	}
-	
-	
-	
 
-	
-	//아이디 중복체크 처리
 	@Override
 	public int id_check(String user_id) {
 		// TODO Auto-generated method stub
@@ -509,9 +459,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("user_password", user_password);
 		return sqlSession.update(nameSpace+".pwd_change", map);
 	}
-	
 
-	
 	@Override
 	public List<AddressVO> addressManageSelect1(String userid) {
 		// TODO Auto-generated method stub
@@ -548,10 +496,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.update(nameSpace + ".addressManageMainReset");	
 	
 	}
-	
-	
-	
-	
+
 	@Override
 	public List<ProductVO> productSearch(String keyword) {
 		// TODO Auto-generated method stub
@@ -598,12 +543,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectList(nameSpace + ".orderSearchCode", map);
 	}
 
-	
-	
-	
-	
-	
-	
 	@Override
 	public float findAvgScore(String product_id) {
 		// TODO Auto-generated method stub
@@ -618,17 +557,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.update(nameSpace + ".updateAvgScore", map);
 	}
 
-
-
-
 	@Override
 	public List<ProductVO> listUserCartProduct(String user_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".listUserCartProduct", user_id);
 	}
-
-
-
 
 	@Override
 	public int updateBuydetailCode(int buydetail_no, String code) {
@@ -638,7 +571,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("code", code);
 		return sqlSession.update(nameSpace + ".updateBuydetailCode", map);
 	}
-
 
 	@Override
 	public List<BoardsVO> detailAdminInquiryList(String product_id) {
